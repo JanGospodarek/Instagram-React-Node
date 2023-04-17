@@ -1,0 +1,35 @@
+POST http://localhost:3000/api/photos HTTP/1.1
+Content-Type: multipart/form-data; boundary=----FormBoundary1234
+
+------FormBoundary1234
+Content-Disposition: form-data; name="file"; filename="input.jpg"
+Content-Type: image/jpeg
+
+< ./input.jpg
+
+------FormBoundary1234
+Content-Disposition: form-data; name="album"
+Content-Type: text/plain
+
+album25
+------FormBoundary1234
+
+### GET - pobierz wszystkie dane
+
+GET http://localhost:3000/api/photos HTTP/1.1
+
+
+### GET - pobierz wszystkie dane
+
+GET http://localhost:3000/api/photos/1680d5'543 HTTP/1.1
+
+### PATCH - updatuj wg id
+
+PATCH  http://localhost:3000/api/photos HTTP/1.1
+content-type: application/json
+
+{"id": 1680596700699,"status": "zmiana"}
+
+### DFELETE 
+
+DELETE http://localhost:3000/api/photos/1680596605543 HTTP/1.1
