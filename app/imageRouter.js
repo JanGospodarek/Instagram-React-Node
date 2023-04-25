@@ -1,5 +1,4 @@
 const fileController = require("./controllers/fileController");
-const jsonController = require("./controllers/jsonController");
 const getRequestData = require("./utils/getRequestData");
 const model = require("./model/model");
 const formidable = require("formidable");
@@ -8,12 +7,12 @@ const imageRouter = async (req, res) => {
   switch (req.method) {
     case "GET":
       if (req.url == "/api/photos") {
-        const photos = jsonController.getAllFiles();
+        const photos = fileController.getAllFiles();
 
         res.end(JSON.stringify(photos, null, 5));
       } else if (req.url.match(/\/api\/photos\/([0-9]+)/)) {
         const id = req.url.split("/")[req.url.split("/").length - 1];
-        const photo = jsonController.getSpecifiedFile(id);
+        const photo = fileController.getSpecifiedFile(id);
 
         res.end(JSON.stringify(photo, null, 5));
       }
@@ -28,10 +27,10 @@ const imageRouter = async (req, res) => {
 
       break;
     case "PATCH":
-      if (req.url == "/api/photos") {
+      if (req.url == "/api/photos" || req.url == "/api/photos/tags/mass") {
         const data = await getRequestData(req);
         const parsed = JSON.parse(data);
-        const msg = jsonController.updateFile(parsed);
+        const msg = fileController.updateFile(parsed);
         res.end(JSON.stringify(msg, null, 5));
       }
 
@@ -39,7 +38,7 @@ const imageRouter = async (req, res) => {
     case "DELETE":
       if (req.url.match(/\/api\/photos\/([0-9]+)/)) {
         const id = req.url.split("/")[req.url.split("/").length - 1];
-        const msg = jsonController.deleteFile(id);
+        const msg = fileController.deleteFile(id);
 
         res.end(JSON.stringify(msg, null, 5));
       }

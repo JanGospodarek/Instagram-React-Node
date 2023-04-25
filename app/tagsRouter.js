@@ -6,8 +6,7 @@ const tagsRouter = async (req, res) => {
   switch (req.method) {
     case "GET":
       if (req.url == "/api/tags") {
-        const arr = tagsController.getTagObjects();
-        res.end(JSON.stringify(arr, null, 5));
+        res.end(JSON.stringify(model.tagsObjects, null, 5));
       }
       if (req.url == "/api/tags/raw") {
         res.end(JSON.stringify(model.tags, null, 5));
@@ -22,7 +21,10 @@ const tagsRouter = async (req, res) => {
       break;
 
     case "POST":
-      if (req.url == "/api/photos") {
+      if (req.url == "/api/tags") {
+        const data = await getRequestData(req);
+        const resData = tagsController.addTag(JSON.parse(data));
+        res.end(JSON.stringify(resData, null, 5));
       }
 
       break;

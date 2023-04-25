@@ -11,7 +11,7 @@ Content-Type: image/jpeg
 Content-Disposition: form-data; name="album"
 Content-Type: text/plain
 
-album25
+album3
 ------FormBoundary1234
 
 ### GET - pobierz wszystkie dane
@@ -21,16 +21,16 @@ GET http://localhost:3000/api/photos HTTP/1.1
 
 ### GET - pobierz wszystkie dane
 
-GET http://localhost:3000/api/photos/1680d5'543 HTTP/1.1
+GET http://localhost:3000/api/photos/1682408869710 HTTP/1.1
 
 ### PATCH - updatuj wg id
 
 PATCH  http://localhost:3000/api/photos HTTP/1.1
 content-type: application/json
 
-{"id": 1680596700699,"status": "zmiana"}
+{"id": 1682408869710,"status": "zmiana","typ":"history"}
 
 
 ### DFELETE 
 
-DELETE http://localhost:3000/api/photos/1680596605543 HTTP/1.1
+DELETE http://localhost:3000/api/photos/1682409567415 HTTP/1.1
