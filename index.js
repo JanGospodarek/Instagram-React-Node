@@ -2,6 +2,8 @@ const http = require("http");
 const logger = require("tracer").colorConsole();
 
 const router = require("./app/router");
+const imageRouter = require("./app/imageRouter");
+const tagsRouter = require("./app/tagsRouter");
 
 // http
 //     .createServer((req, res) => )
@@ -18,8 +20,9 @@ http
     //tags
     else if (req.url.search("/api/tags") != -1) {
       await tagsRouter(req, res);
-    } else {
-      router(req, res);
     }
+    //  else {
+    //   router(req, res);
+    // }
   })
-  .listen(PORT, () => console.log("listen on 3000"));
+  .listen(3000, () => console.log("listen on 3000"));
