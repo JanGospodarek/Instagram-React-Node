@@ -1,4 +1,72 @@
+import React, { useState, useRef } from "react";
+
 const Register = () => {
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const lastNameRef = useRef<HTMLInputElement>(null);
+
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+    setPassword(value);
+  };
+
+  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+    setEmail(value);
+  };
+
+  const handleSubmit = () => {
+    let errorWasFound = false;
+    if (nameRef.current!.value.trim() === "") {
+      nameRef.current!.classList.add("input-error");
+      errorWasFound = true;
+    }
+
+    if (lastNameRef.current!.value.trim() === "") {
+      lastNameRef.current!.classList.add("input-error");
+      errorWasFound = true;
+    }
+    if (password.length < 8) {
+      passwordRef.current!.classList.add("input-error");
+      errorWasFound = true;
+    }
+    if (!email.includes("@")) {
+      emailRef.current!.classList.add("input-error");
+      errorWasFound = true;
+    }
+    if (errorWasFound) {
+      return;
+    } else {
+      //handle register
+    }
+  };
+
+  const compileValidityClasses = (type: string) => {
+    switch (type) {
+      case "password":
+        if (password === "") {
+          return " focus:input-secondary";
+        } else if (password.length < 8) {
+          return "input-error focus:input-error ";
+        } else {
+          return "input-success focus:input-success ";
+        }
+        break;
+      case "email":
+        if (email === "") {
+          return " focus:input-secondary";
+        } else if (!email.includes("@")) {
+          return "input-error focus:input-error ";
+        } else {
+          return "input-success focus:input-success ";
+        }
+        break;
+    }
+  };
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -17,7 +85,10 @@ const Register = () => {
                 <input
                   type="text"
                   placeholder="Your name"
+                  maxLength={15}
+                  ref={nameRef}
                   className="input input-bordered focus:input-secondary"
+                  onChange={(e) => e.target.classList.remove("input-error")}
                 />
               </div>
               <div className="form-control">
@@ -26,8 +97,11 @@ const Register = () => {
                 </label>
                 <input
                   type="text"
+                  maxLength={20}
+                  ref={lastNameRef}
                   placeholder="Your last name"
                   className="input input-bordered focus:input-secondary"
+                  onChange={(e) => e.target.classList.remove("input-error")}
                 />
               </div>
               <div className="form-control">
@@ -36,8 +110,13 @@ const Register = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="email"
-                  className="input input-bordered focus:input-secondary"
+                  value={email}
+                  ref={emailRef}
+                  placeholder="Must include '@'"
+                  className={`input input-bordered  ${compileValidityClasses(
+                    "email"
+                  )}`}
+                  onChange={(e) => handleEmailChange(e)}
                 />
               </div>
               <div className="form-control">
@@ -46,12 +125,22 @@ const Register = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="password"
-                  className="input input-bordered focus:input-secondary"
+                  placeholder="At least 8 characters"
+                  value={password}
+                  ref={passwordRef}
+                  className={`input input-bordered  ${compileValidityClasses(
+                    "password"
+                  )}`}
+                  onChange={(e) => handlePasswordChange(e)}
                 />
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button
+                  className="btn btn-outline btn-primary"
+                  onClick={handleSubmit}
+                >
+                  Register!
+                </button>
               </div>
             </div>
           </div>
