@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "formidable": "^1.2.2",
+    "nodemon": "^2.0.22",
+    "sharp": "^0.32.1",
     "tracer": "^1.1.6"
   }
 }

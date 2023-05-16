@@ -1,4 +1,3 @@
-const { log } = require("console");
 const model = require("../model/model");
 const fs = require("fs");
 const jsonController = require("./jsonController");
@@ -45,11 +44,18 @@ module.exports = {
       if (data.typ == "history") {
         //prettier-ignore
         model.photos[index].lastChange = `${data.status} ${model.photos[index].history.length - 1}`;
-
-        model.photos[index].history.push({
-          status: `${data.status} ${model.photos[index].history.length - 1}`,
-          lastModifiedDate: Date.now(),
-        });
+        if (data.url) {
+          model.photos[index].history.push({
+            status: `${data.status} ${model.photos[index].history.length - 1}`,
+            lastModifiedDate: Date.now(),
+            url: data.url,
+          });
+        } else {
+          model.photos[index].history.push({
+            status: `${data.status} ${model.photos[index].history.length - 1}`,
+            lastModifiedDate: Date.now(),
+          });
+        }
       } else {
         model.photos[index].tags.push(...data.data);
       }

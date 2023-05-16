@@ -1,10 +1,9 @@
 const http = require("http");
 const logger = require("tracer").colorConsole();
 const jsonController = require("./app/controllers/jsonController");
-const router = require("./app/router");
-const imageRouter = require("./app/imageRouter");
-const tagsRouter = require("./app/tagsRouter");
-
+const imageRouter = require("./app/routers/imageRouter");
+const tagsRouter = require("./app/routers/tagsRouter");
+const filtersRouter = require("./app/routers/filtersRouter");
 // http
 //     .createServer((req, res) => )
 //     .listen(3000, () => logger.log("listen on 3000"))
@@ -24,8 +23,10 @@ http
     else if (req.url.search("/api/tags") != -1) {
       await tagsRouter(req, res);
     }
-    //  else {
-    //   router(req, res);
-    // }
+
+    //filters router
+    else if (req.url.search("/api/filters") != -1) {
+      await filtersRouter(req, res);
+    }
   })
-  .listen(3000, () => console.log("listen on 3000"));
+  .listen(4000, () => console.log("listen on 4000"));
