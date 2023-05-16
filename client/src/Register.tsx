@@ -1,4 +1,4 @@
-const Home = () => {
+const Register = () => {
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -12,12 +12,32 @@ const Home = () => {
             <div className="card-body">
               <div className="form-control">
                 <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  className="input input-bordered focus:input-secondary"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Last name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Your last name"
+                  className="input input-bordered focus:input-secondary"
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
                   <span className="label-text">Email</span>
                 </label>
                 <input
                   type="text"
                   placeholder="email"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-secondary"
                 />
               </div>
               <div className="form-control">
@@ -27,7 +47,7 @@ const Home = () => {
                 <input
                   type="text"
                   placeholder="password"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-secondary"
                 />
               </div>
               <div className="form-control mt-6">
@@ -40,4 +60,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default Register;

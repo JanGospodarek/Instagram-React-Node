@@ -1,4 +1,4 @@
-const Home = () => {
+const Login = () => {
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -17,7 +17,7 @@ const Home = () => {
                 <input
                   type="text"
                   placeholder="email"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-secondary"
                 />
               </div>
               <div className="form-control">
@@ -27,7 +27,7 @@ const Home = () => {
                 <input
                   type="text"
                   placeholder="password"
-                  className="input input-bordered"
+                  className="input input-bordered focus:input-secondary"
                 />
               </div>
               <div className="form-control mt-6">
@@ -40,4 +40,4 @@ const Home = () => {
     </>
   );
 };
-export default Home;
+export default Login;
