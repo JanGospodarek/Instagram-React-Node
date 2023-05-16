@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-
+import compileValidityClasses from "../hooks/useCompileClassValidity";
 const Register = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -45,28 +45,6 @@ const Register = () => {
     }
   };
 
-  const compileValidityClasses = (type: string) => {
-    switch (type) {
-      case "password":
-        if (password === "") {
-          return " focus:input-secondary";
-        } else if (password.length < 8) {
-          return "input-error focus:input-error ";
-        } else {
-          return "input-success focus:input-success ";
-        }
-        break;
-      case "email":
-        if (email === "") {
-          return " focus:input-secondary";
-        } else if (!email.includes("@")) {
-          return "input-error focus:input-error ";
-        } else {
-          return "input-success focus:input-success ";
-        }
-        break;
-    }
-  };
   return (
     <>
       <div className="hero min-h-screen bg-base-200">
@@ -114,7 +92,9 @@ const Register = () => {
                   ref={emailRef}
                   placeholder="Must include '@'"
                   className={`input input-bordered  ${compileValidityClasses(
-                    "email"
+                    "email",
+                    undefined,
+                    email
                   )}`}
                   onChange={(e) => handleEmailChange(e)}
                 />
@@ -129,7 +109,9 @@ const Register = () => {
                   value={password}
                   ref={passwordRef}
                   className={`input input-bordered  ${compileValidityClasses(
-                    "password"
+                    "password",
+                    password,
+                    undefined
                   )}`}
                   onChange={(e) => handlePasswordChange(e)}
                 />
