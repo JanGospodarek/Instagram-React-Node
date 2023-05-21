@@ -46,7 +46,7 @@ module.exports = {
         model.photos[index].lastChange = `${data.status} ${model.photos[index].history.length - 1}`;
         if (data.url) {
           model.photos[index].history.push({
-            status: `${data.status} ${model.photos[index].history.length - 1}`,
+            status: `${data.status}`,
             lastModifiedDate: Date.now(),
             url: data.url,
           });
@@ -86,5 +86,30 @@ module.exports = {
       });
       return { msg: "Successfully deleted photo with id " + id };
     } else return { msg: "There is no photo with id " + id };
+  },
+  getImage(id, filter) {
+    const index = model.photos.findIndex((el) => el.id == id);
+    if (index !== -1) {
+      if (filter) {
+        const indexFilter = model.photos[index].history.findIndex(
+          (el) => el.status == filter
+        );
+        console.log(model.photos[index].history, filter);
+        if (indexFilter !== -1)
+          return {
+            type: "OK",
+            filePath: model.photos[index].history[indexFilter].url,
+          };
+        else
+          return {
+            type: "ERROR",
+            msg: "There is no filter " + filter + " on photo " + id,
+          };
+      } else {
+        return { type: "OK", filePath: model.photos[index].url };
+      }
+    } else {
+      return { type: "ERROR", msg: "There is no file with id " + id };
+    }
   },
 };

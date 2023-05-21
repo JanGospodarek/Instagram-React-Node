@@ -15,3 +15,11 @@ content-type: application/json
     "g":255,
     "b":0
 }
+
+
+### get image file by id
+GET http://localhost:4000/api/getfile/1684687667323 
+
+
+### get image file by id
+GET http://localhost:4000/api/getfile/1684687667323/tint 
