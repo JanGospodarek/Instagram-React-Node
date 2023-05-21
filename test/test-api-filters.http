@@ -1,7 +1,7 @@
 
 
 ### dane o zdjęciu, potrzebne do jego obróbki (width,height)
-GET http://localhost:4000/api/filters/metadata/1682412476234 
+GET http://localhost:4000/api/filters/metadata/1684687667323 
 
 
 ### użycie konkretnego filtra, dane o nim przekazujemy w jsonie
@@ -9,7 +9,7 @@ PATCH http://localhost:4000/api/filters
 content-type: application/json
 
 {
-    "id":1682412476234,
+    "id":1684687667323,
     "filter":"tint",
     "r":255,
     "g":255,

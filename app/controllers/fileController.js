@@ -19,7 +19,7 @@ module.exports = {
           `${path}/albums/${albumName}/${newFileName}`,
           (err) => {
             //prettier-ignore
-            const photo = new model.Photo(Date.now(), albumName, files.file.name, `${path}/albums/${albumName}/${newFileName}`, 'original', [{ status: "original", lastModifiedDate: files.file.lastModifiedDate }],[])
+            const photo = new model.Photo(Date.now(), albumName, files.file.name, `/albums/${albumName}/${newFileName}`, 'original', [{ status: "original", lastModifiedDate: files.file.lastModifiedDate }],[])
             model.photos.push(photo);
             jsonController.writeFileJSON(model.photos);
           }
@@ -66,11 +66,11 @@ module.exports = {
       return { msg: "Photo with id " + data.id + " does not exist" };
     }
   },
-  deleteFile: (id) => {
+  deleteFile: (id, path) => {
     const index = model.photos.findIndex((el) => el.id == id);
     if (index !== -1) {
       console.log(model.photos[index].url);
-      fs.rm(model.photos[index].url, (err) => {
+      fs.rm(path + model.photos[index].url, (err) => {
         // const pathArr = model.photos[index].url.split("/");
         // pathArr.pop();
         model.photos.splice(index, 1);

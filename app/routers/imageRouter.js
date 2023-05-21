@@ -2,8 +2,7 @@ const fileController = require("../controllers/fileController");
 const getRequestData = require("../utils/getRequestData");
 const model = require("../model/model");
 const formidable = require("formidable");
-
-const imageRouter = async (req, res) => {
+const imageRouter = async (req, res, path) => {
   switch (req.method) {
     case "GET":
       if (req.url == "/api/photos") {
@@ -22,7 +21,7 @@ const imageRouter = async (req, res) => {
     case "POST":
       if (req.url == "/api/photos") {
         let form = formidable({});
-        fileController.addPhoto(form, req, __dirname + "/data");
+        fileController.addPhoto(form, req, path + "/data");
       }
 
       break;
@@ -38,7 +37,7 @@ const imageRouter = async (req, res) => {
     case "DELETE":
       if (req.url.match(/\/api\/photos\/([0-9]+)/)) {
         const id = req.url.split("/")[req.url.split("/").length - 1];
-        const msg = fileController.deleteFile(id);
+        const msg = fileController.deleteFile(id, path + "/data");
 
         res.end(JSON.stringify(msg, null, 5));
       }

@@ -14,19 +14,25 @@ jsonController.readFileJSON();
 http
   .createServer(async (req, res) => {
     //images
+    try {
+      if (req.url.search("/api/photos") != -1) {
+        await imageRouter(req, res, __dirname + "/app");
+      }
 
-    if (req.url.search("/api/photos") != -1) {
-      await imageRouter(req, res);
-    }
+      //tags
+      else if (req.url.search("/api/tags") != -1) {
+        await tagsRouter(req, res, __dirname + "/app");
+      }
 
-    //tags
-    else if (req.url.search("/api/tags") != -1) {
-      await tagsRouter(req, res);
-    }
-
-    //filters router
-    else if (req.url.search("/api/filters") != -1) {
-      await filtersRouter(req, res);
+      //filters router
+      else if (
+        req.url.search("/api/filters") != -1 ||
+        req.url.search("/api/getfile") != -1
+      ) {
+        await filtersRouter(req, res, __dirname + "/app");
+      }
+    } catch (error) {
+      console.log(error);
     }
   })
   .listen(4000, () => console.log("listen on 4000"));
