@@ -1,6 +1,7 @@
 const model = require("../model/model");
 const getPhotoMetadata = require("../utils/getPhotoMetadata");
 const fileController = require("./fileController");
+const jsonController = require("../controllers/jsonController");
 const sharp = require("sharp");
 module.exports = {
   getMetadata: async (id, path) => {

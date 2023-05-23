@@ -1,0 +1,32 @@
+
+###register usera
+
+POST http://localhost:4000/api/user/register HTTP/1.1
+content-type: application/json
+
+{    
+   "name": "name",
+   "lastName": "lastName",
+   "email":"name2@email.pl",
+   "password":"password"
+}
+
+
+### user potwierdza rejestrację konta z użyciem tokena
+
+GET http://localhost:4000/api/user/confirm/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWUyQGVtYWlsLnBsIiwiaWF0IjoxNjg0ODI0NjczLCJleHAiOjE2ODQ4MjgyNzN9.Q159SCFSijnGGxtVc1tlEN3JFByxVIKJ8d1bzLOKwEs HTTP/1.1
+
+
+### logowanie z odesłaniem tokena po zalogowaniu - od tej pory każde żądanie zawiera token
+
+POST http://localhost:4000/api/user/login HTTP/1.1
+content-type: application/json
+
+{
+  "email":"email",
+  "password":"password"
+}
+
+### json all users - funkcja pomocnicza dla testów
+
+GET http://localhost:4000/api/user HTTP/1.1

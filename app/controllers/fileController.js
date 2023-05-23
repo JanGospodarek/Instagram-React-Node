@@ -21,7 +21,7 @@ module.exports = {
             //prettier-ignore
             const photo = new model.Photo(Date.now(), albumName, files.file.name, `/albums/${albumName}/${newFileName}`, 'original', [{ status: "original", lastModifiedDate: files.file.lastModifiedDate }],[])
             model.photos.push(photo);
-            jsonController.writeFileJSON(model.photos);
+            jsonController.writeFileJSON();
           }
         );
       });
@@ -59,7 +59,7 @@ module.exports = {
       } else {
         model.photos[index].tags.push(...data.data);
       }
-      jsonController.writeFileJSON(model.photos);
+      jsonController.writeFileJSON();
 
       return model.photos[index];
     } else {
@@ -74,7 +74,7 @@ module.exports = {
         // const pathArr = model.photos[index].url.split("/");
         // pathArr.pop();
         model.photos.splice(index, 1);
-        jsonController.writeFileJSON(model.photos);
+        jsonController.writeFileJSON();
 
         // console.log("path", pathArr.join("/"));
         // fs.readdir(pathArr.join("/"), function (err, files) {

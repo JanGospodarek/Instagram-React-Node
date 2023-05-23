@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1684822812243,
+    "name": "name",
+    "email": "name@email.pl",
+    "password": "$2a$10$pHDfqhCy0RgOb1PJ7KuRSeHx4IbKF6f64cWczFcdLdLh40p3OJzp6",
+    "confirmed": false,
+    "lastName": "lastName"
+  },
+  {
+    "id": 1684824673393,
+    "name": "name",
+    "email": "name2@email.pl",
+    "password": "$2a$10$aOoC4tFBFEiQOsTjxeslU.Aqw3y3/RoPPEnisJ23CA/GC5gggEK0q",
+    "confirmed": true,
+    "lastName": "lastName"
+  }
+]
