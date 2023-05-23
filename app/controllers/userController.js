@@ -1,5 +1,6 @@
 const model = require("../model/model");
 const encrypt = require("../utils/encrypt");
+const decrypt = require("../utils/decrypt");
 const jsonController = require("./jsonController");
 const jwt = require("jsonwebtoken");
 
@@ -73,5 +74,18 @@ module.exports = {
           break;
       }
     }
+  },
+  login: async (data) => {
+    const index = model.users.findIndex((el) => el.email == data.email);
+    if (index == -1) return { type: "ERROR", msg: "User not found" };
+    if (!model.users[index].confirmed)
+      return { type: "ERROR", msg: "User is not confirmed" };
+    const decrypted = await decrypt(data.password, model.users[index].password);
+    if (decrypted) {
+      return { type: "OK", token };
+    } else {
+      return { type: "ERROR", msg: "Password is invalid" };
+    }
+    console.log(decrypted);
   },
 };

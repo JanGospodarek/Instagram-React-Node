@@ -19,6 +19,11 @@ const userRouter = async (req, res, path) => {
         const resData = await userController.register(JSON.parse(data));
         res.end(JSON.stringify(resData, null, 5));
       }
+      if (req.url == "/api/user/login") {
+        const data = await getRequestData(req);
+        const resData = await userController.login(JSON.parse(data));
+        res.end(JSON.stringify(resData, null, 5));
+      }
       break;
     case "PATCH":
       break;
