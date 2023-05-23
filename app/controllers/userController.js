@@ -65,13 +65,6 @@ module.exports = {
       return { type: "OK", msg: "User confirmed!", code: 200 };
     } catch (ex) {
       return { type: "ERROR", msg: ex.message, code: 401 };
-      // TODO: handle different error messages
-      //   response.writeHead(401, { "Content-Type": "application/json" }); // invalid token
-      //   response.writeHead(400, { "Content-Type": "application/json" }); // niepełne dane usera
-      //   response.writeHead(409, { "Content-Type": "application/json" }); // user exists
-      //   response.writeHead(201, { "Content-Type": "application/json" }); // user created
-      //   response.writeHead(200, { "Content-Type": "application/json" }); // token authorized
-      //   response.writeHead(404, { "Content-Type": "application/json" }); // user not found
     }
   },
   login: async (data) => {

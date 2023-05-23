@@ -5,6 +5,7 @@ const imageRouter = require("./app/routers/imageRouter");
 const tagsRouter = require("./app/routers/tagsRouter");
 const filtersRouter = require("./app/routers/filtersRouter");
 const userRouter = require("./app/routers/userRouter");
+const profileRouter = require("./app/routers/profileRouter");
 // http
 //     .createServer((req, res) => )
 //     .listen(3000, () => logger.log("listen on 3000"))
@@ -35,6 +36,8 @@ http
         await filtersRouter(req, res, __dirname + "/app");
       } else if (req.url.search("/api/user") != -1) {
         await userRouter(req, res, __dirname + "/app");
+      } else if (req.url.search("/api/profil") != -1) {
+        await profileRouter(req, res, __dirname + "/app");
       }
     } catch (error) {
       console.log(error);
