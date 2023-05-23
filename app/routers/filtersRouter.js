@@ -14,9 +14,8 @@ const filtersRouter = async (req, res, path) => {
         const id = req.url.split("/")[req.url.split("/").length - 2];
         const data = await fileController.getImage(id, filter);
         if (data.type == "OK")
-          res.end(
-            `<img src='public/images/${path + "/data" + data.filePath}'>`
-          );
+          // TODO: wysylanie obrazka
+          res.end(`<img src='${path + "/data" + data.filePath}'>`);
         else res.end(JSON.stringify({ msg: data.msg }, null, 5));
         return;
       }
@@ -25,9 +24,9 @@ const filtersRouter = async (req, res, path) => {
         const id = req.url.split("/")[req.url.split("/").length - 1];
         const data = await fileController.getImage(id);
         if (data.type == "OK")
-          res.end(
-            `<img src='public/images/${path + "/data" + data.filePath}'>`
-          );
+          // TODO: wysylanie obrazka
+
+          res.end(`<img src='${path + "/data" + data.filePath}'>`);
         else res.end(JSON.stringify({ msg: data.msg }, null, 5));
       }
 
