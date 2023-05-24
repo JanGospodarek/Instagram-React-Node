@@ -21,6 +21,7 @@ class User {
 }
 const photos = [];
 const users = [];
+const invalidTokens = [];
 const tags = [
   "#love",
   "#instagood",
@@ -62,10 +63,11 @@ tags.forEach((el, i) => {
 });
 
 module.exports = {
-  Photo: Photo,
-  photos: photos,
-  users: users,
-  tags: tags,
+  Photo,
+  photos,
+  users,
+  tags,
   tagsObjects: tagObj,
-  User: User,
+  User,
+  invalidTokens,
 };

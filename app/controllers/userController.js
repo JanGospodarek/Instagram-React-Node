@@ -87,4 +87,9 @@ module.exports = {
       return { code: 401, type: "ERROR", msg: "Password is invalid" };
     }
   },
+  logout: async (token) => {
+    model.invalidTokens.push(token);
+    await jsonController.writeFileJSON();
+    return { code: 200, type: "OK", msg: "Logged out" };
+  },
 };

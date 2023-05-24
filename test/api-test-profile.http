@@ -13,7 +13,7 @@ content-type: application/json
 
 ### wysłanie zdjęcia profilowego
 POST http://localhost:4000/api/profile HTTP/1.1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWU0QGVtYWlsLnBsIiwiaWF0IjoxNjg0ODI5NDA4LCJleHAiOjE2ODQ4MzMwMDh9.21llQdra2yzVBK2G5Gv24fZ_-IxSQDvLVLxkXnjMj9E
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWVAZW1haWwucGwiLCJpYXQiOjE2ODQ5Mjk5MTksImV4cCI6MTY4NDkzMzUxOX0.z2a5dZsN5_d2c-VtR4T4N2M6ES51a2QCGUokBQl3X9E
 Content-Type: multipart/form-data; boundary=----FormBoundary1234
 
 ------FormBoundary1234
@@ -27,6 +27,7 @@ Content-Type: image/jpeg
 
 ### wylogowanie
 GET http://localhost:4000/api/logout HTTP/1.1
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWVAZW1haWwucGwiLCJpYXQiOjE2ODQ5Mjk5MTksImV4cCI6MTY4NDkzMzUxOX0.z2a5dZsN5_d2c-VtR4T4N2M6ES51a2QCGUokBQl3X9E
 
 
 POST http://localhost:4000/api/photos HTTP/1.1

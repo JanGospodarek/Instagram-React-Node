@@ -16,6 +16,7 @@
     "fs.promises": "^0.1.2",
     "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.22",
+    "rimraf": "^5.0.1",
     "sharp": "^0.32.1",
     "tracer": "^1.1.6"
   }

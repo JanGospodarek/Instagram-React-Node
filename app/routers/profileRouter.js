@@ -1,4 +1,5 @@
 const profileController = require("../controllers/profileController");
+const userController = require("../controllers/userController");
 const getRequestData = require("../utils/getRequestData");
 const model = require("../model/model");
 const jwt = require("jsonwebtoken");
@@ -20,8 +21,43 @@ const profileRouter = async (req, res, path) => {
               res.end(JSON.stringify({ type: "ERROR", msg: "Invalid token", code: 401 }, null, 5));
               return;
             }
+            if (model.invalidTokens.includes(token)) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
+              return;
+            }
 
             const resData = await profileController.getUserData(decoded);
+            res.end(JSON.stringify(resData, null, 5));
+          } catch (err) {
+            //prettier-ignore
+            res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
+          }
+        }
+      }
+      if (req.url == "/api/logout") {
+        if (
+          req.headers.authorization &&
+          req.headers.authorization.startsWith("Bearer")
+        ) {
+          try {
+            const token = req.headers.authorization.split(" ")[1];
+            const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+            if (!decoded) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Invalid token", code: 401 }, null, 5));
+              return;
+            }
+            console.log(
+              model.invalidTokens,
+              model.invalidTokens.includes(token)
+            );
+            if (model.invalidTokens.includes(token)) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
+              return;
+            }
+            const resData = await userController.logout(token);
             res.end(JSON.stringify(resData, null, 5));
           } catch (err) {
             //prettier-ignore
@@ -43,6 +79,11 @@ const profileRouter = async (req, res, path) => {
             if (!decoded) {
               //prettier-ignore
               res.end(JSON.stringify({ type: "ERROR", msg: "Invalid token", code: 401 }, null, 5));
+              return;
+            }
+            if (model.invalidTokens.includes(token)) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
               return;
             }
             let form = formidable({});
@@ -71,7 +112,11 @@ const profileRouter = async (req, res, path) => {
               res.end(JSON.stringify({ type: "ERROR", msg: "Invalid token", code: 401 }, null, 5));
               return;
             }
-
+            if (model.invalidTokens.includes(token)) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
+              return;
+            }
             const data = await getRequestData(req);
 
             //prettier-ignore
