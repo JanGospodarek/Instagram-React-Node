@@ -1,0 +1,34 @@
+### pobranie danych usera do wyświetlenia w profilu
+GET http://localhost:4000/api/profile HTTP/1.1
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWU0QGVtYWlsLnBsIiwiaWF0IjoxNjg0ODI5NDA4LCJleHAiOjE2ODQ4MzMwMDh9.21llQdra2yzVBK2G5Gv24fZ_-IxSQDvLVLxkXnjMj9E
+
+
+### aktualizacja danych usera w jego profilu
+PATCH http://localhost:4000/api/profile HTTP/1.1
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWU0QGVtYWlsLnBsIiwiaWF0IjoxNjg0ODI5NDA4LCJleHAiOjE2ODQ4MzMwMDh9.21llQdra2yzVBK2G5Gv24fZ_-IxSQDvLVLxkXnjMj9E
+content-type: application/json
+
+{"name":"wjdfjfjfjfww","lastName":"duuuuuu"}
+
+
+### wysłanie zdjęcia profilowego
+POST http://localhost:4000/api/profile HTTP/1.1
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWVAZW1haWwucGwiLCJpYXQiOjE2ODQ5OTgzMTgsImV4cCI6MTY4NTAwMTkxOH0._siYtM9zzOt_G20fLNn9TtkQIK-n7V6O-LUIXkxgdxI
+Content-Type: multipart/form-data; boundary=----FormBoundary1234
+
+------FormBoundary1234
+Content-Disposition: form-data; name="file"; filename="input.jpg"
+Content-Type: image/jpeg
+
+< ./input.jpg
+
+------FormBoundary1234
+
+
+### wylogowanie
+GET http://localhost:4000/api/logout HTTP/1.1
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWVAZW1haWwucGwiLCJpYXQiOjE2ODQ5OTgwMDgsImV4cCI6MTY4NTAwMTYwOH0.fXulmIfqtky3UFv6VapiPyvH20fbkEYdSjZu--hBPZs
+
+
+POST http://localhost:4000/api/photos HTTP/1.1
+

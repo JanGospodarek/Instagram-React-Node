@@ -19,9 +19,9 @@ module.exports = {
           `${path}/albums/${albumName}/${newFileName}`,
           (err) => {
             //prettier-ignore
-            const photo = new model.Photo(Date.now(), albumName, files.file.name, `${path}/albums/${albumName}/${newFileName}`, 'original', [{ status: "original", lastModifiedDate: files.file.lastModifiedDate }],[])
+            const photo = new model.Photo(Date.now(), albumName, files.file.name, `/albums/${albumName}/${newFileName}`, 'original', [{ status: "original", lastModifiedDate: files.file.lastModifiedDate }],[])
             model.photos.push(photo);
-            jsonController.writeFileJSON(model.photos);
+            jsonController.writeFileJSON();
           }
         );
       });
@@ -46,7 +46,7 @@ module.exports = {
         model.photos[index].lastChange = `${data.status} ${model.photos[index].history.length - 1}`;
         if (data.url) {
           model.photos[index].history.push({
-            status: `${data.status} ${model.photos[index].history.length - 1}`,
+            status: `${data.status}`,
             lastModifiedDate: Date.now(),
             url: data.url,
           });
@@ -59,22 +59,22 @@ module.exports = {
       } else {
         model.photos[index].tags.push(...data.data);
       }
-      jsonController.writeFileJSON(model.photos);
+      jsonController.writeFileJSON();
 
       return model.photos[index];
     } else {
       return { msg: "Photo with id " + data.id + " does not exist" };
     }
   },
-  deleteFile: (id) => {
+  deleteFile: (id, path) => {
     const index = model.photos.findIndex((el) => el.id == id);
     if (index !== -1) {
       console.log(model.photos[index].url);
-      fs.rm(model.photos[index].url, (err) => {
+      fs.rm(path + model.photos[index].url, (err) => {
         // const pathArr = model.photos[index].url.split("/");
         // pathArr.pop();
         model.photos.splice(index, 1);
-        jsonController.writeFileJSON(model.photos);
+        jsonController.writeFileJSON();
 
         // console.log("path", pathArr.join("/"));
         // fs.readdir(pathArr.join("/"), function (err, files) {
@@ -86,5 +86,30 @@ module.exports = {
       });
       return { msg: "Successfully deleted photo with id " + id };
     } else return { msg: "There is no photo with id " + id };
+  },
+  getImage(id, filter) {
+    const index = model.photos.findIndex((el) => el.id == id);
+    if (index !== -1) {
+      if (filter) {
+        const indexFilter = model.photos[index].history.findIndex(
+          (el) => el.status == filter
+        );
+        console.log(model.photos[index].history, filter);
+        if (indexFilter !== -1)
+          return {
+            type: "OK",
+            filePath: model.photos[index].history[indexFilter].url,
+          };
+        else
+          return {
+            type: "ERROR",
+            msg: "There is no filter " + filter + " on photo " + id,
+          };
+      } else {
+        return { type: "OK", filePath: model.photos[index].url };
+      }
+    } else {
+      return { type: "ERROR", msg: "There is no file with id " + id };
+    }
   },
 };

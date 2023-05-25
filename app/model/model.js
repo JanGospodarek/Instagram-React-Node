@@ -9,7 +9,19 @@ class Photo {
     this.tags = tags;
   }
 }
+class User {
+  constructor(id, name, email, password, confirmed, lastName) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.confirmed = confirmed;
+    this.lastName = lastName;
+  }
+}
 const photos = [];
+const users = [];
+const invalidTokens = [];
 const tags = [
   "#love",
   "#instagood",
@@ -51,8 +63,11 @@ tags.forEach((el, i) => {
 });
 
 module.exports = {
-  Photo: Photo,
-  photos: photos,
-  tags: tags,
+  Photo,
+  photos,
+  users,
+  tags,
   tagsObjects: tagObj,
+  User,
+  invalidTokens,
 };

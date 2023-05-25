@@ -1,14 +1,17 @@
 const model = require("../model/model");
 const getPhotoMetadata = require("../utils/getPhotoMetadata");
 const fileController = require("./fileController");
+const jsonController = require("../controllers/jsonController");
 const sharp = require("sharp");
 module.exports = {
-  getMetadata: async (id) => {
+  getMetadata: async (id, path) => {
     const photoIndex = model.photos.findIndex((el) => el.id == id);
-    const data = await getPhotoMetadata(model.photos[photoIndex].url);
+    const data = await getPhotoMetadata(
+      path + "/data" + model.photos[photoIndex].url
+    );
     return data;
   },
-  addFilterToPhoto: async (data) => {
+  addFilterToPhoto: async (data, path) => {
     const photoIndex = model.photos.findIndex((el) => el.id == data.id);
     const photo = model.photos[photoIndex];
 
@@ -18,9 +21,9 @@ module.exports = {
 
     switch (data.filter) {
       case "tint":
-        await sharp(photo.url)
+        await sharp(path + "/data" + photo.url)
           .tint({ r: data.r, g: data.g, b: data.b })
-          .toFile(newName);
+          .toFile(path + "/data" + newName);
         break;
 
       default:
