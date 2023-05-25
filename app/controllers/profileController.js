@@ -25,6 +25,10 @@ module.exports = {
     const index = model.users.findIndex((el) => el.email == decoded.email);
     // const dirs = await asyncFs.readdir(`${path}/profiles`);
     // console.log(dirs);
+
+    form.uploadDir = `${path}/temp`; // folder do zapisu zdjęcia
+    form.keepExtensions = true;
+
     if (fs.existsSync(`${path}/profiles/${model.users[index].id}`)) {
       //Users has already profile images
 
@@ -33,13 +37,18 @@ module.exports = {
         console.log(files);
         ///Shit dont work
         for (const file of files) {
-          fs.unlink(
-            `${path}/profiles/${model.users[index].id}/${file}`,
-            (err) => {
-              if (err) throw err;
-              console.log("woww");
-            }
-          );
+          // fs.rm(`${path}/profiles/${model.users[index].id}/${file}`, (err) => {
+          //   if (err) throw err;
+          //   console.log("woww");
+
+          form.parse(req, (err, fields, files) => {
+            fs.rename(
+              files.file.path,
+              `${path}/profiles/${model.users[index].id}/profile.jpg`,
+              (err) => {}
+            );
+          });
+          // });
         }
       });
 
@@ -49,11 +58,21 @@ module.exports = {
       //     await fs.unlink(`${path}/profiles/${model.users[index].id}/${file}`);
       //   }
     } else {
-      await fs.mkdirSync(`${path}/profiles/${model.users[index].id}`);
-      form.uploadDir = `${path}/profiles/${model.users[index].id}`; // folder do zapisu zdjęcia
-      form.keepExtensions = true;
+      // await fs.mkdirSync(`${path}/profiles/${model.users[index].id}`);
+      // form.uploadDir = `${path}/profiles/${model.users[index].id}`; // folder do zapisu zdjęcia
+      // form.keepExtensions = true;
+      // form.parse(req, function (err, fields, files) {
+      //   console.log(files.file.path);
+      // });
+
       form.parse(req, function (err, fields, files) {
-        console.log(files.file.path);
+        fs.mkdir(`${path}/profiles/${model.users[index].id}`, (err) => {
+          fs.rename(
+            files.file.path,
+            `${path}/profiles/${model.users[index].id}/profile.jpg`,
+            (err) => {}
+          );
+        });
       });
     }
 
