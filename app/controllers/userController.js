@@ -46,7 +46,8 @@ module.exports = {
       return {
         type: "OK",
         msg: `skopiuj poniższy link do przeglądarki w celu potwierdzenia konta Uwaga: link jest ważny przez godzinę`,
-        link: `http://localhost:${process.env.APP_PORT}/api/user/confirm/${token}`,
+        // link: `http://localhost:${process.env.APP_PORT}/api/user/confirm/${token}`,
+        link: token,
         code: 201,
       };
     } catch (error) {

@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 const Alert = (props: {
   handleClose: () => void;
   type: string;
@@ -5,7 +7,7 @@ const Alert = (props: {
   link?: string;
 }) => {
   console.log(props.type, props.msg);
-
+  const nav = useNavigate();
   return (
     <div
       className={`alert  shadow-lg  absolute bottom-10 ${
@@ -45,9 +47,12 @@ const Alert = (props: {
 
         <p className="break-words">{props.msg}</p>
         {props.link ? (
-          <a className="btn btn-primary" href={props.link}>
-            POTWIERDŹ KONTO
-          </a>
+          <button
+            className="btn btn-primary"
+            onClick={() => nav(`/verify/${props.link}`)}
+          >
+            Potwierdź konto
+          </button>
         ) : (
           <button className="btn btn-primary" onClick={props.handleClose}>
             Close

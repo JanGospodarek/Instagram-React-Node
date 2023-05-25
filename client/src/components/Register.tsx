@@ -5,9 +5,11 @@ import Alert from "./Alert";
 const Register = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const [isAlert, setIsAlert] = useState<{ type: string; msg: string,link:string } | null>(
-    null
-  );
+  const [isAlert, setIsAlert] = useState<{
+    type: string;
+    msg: string;
+    link: string;
+  } | null>(null);
 
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -59,7 +61,8 @@ const Register = () => {
           "POST"
         )) as Response;
         const { type, msg, link } = await res.json();
-        setIsAlert({ type, msg ,link});
+
+        setIsAlert({ type, msg, link });
 
         if (type == "OK") {
           //redirect to home page
