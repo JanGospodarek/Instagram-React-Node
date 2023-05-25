@@ -8,45 +8,50 @@ const fs = require("fs");
 
 module.exports = {
   register: async (data) => {
-    if (!data.name || !data.lastName || !data.email || !data.password)
-      return { type: "ERROR", msg: "Some of data is missing", code: 400 };
+    try {
+      if (!data.name || !data.lastName || !data.email || !data.password)
+        return { type: "ERROR", msg: "Some of data is missing", code: 400 };
 
-    // Check if user exists
-    const index = model.users.findIndex((el) => el.email == data.email);
-    if (index !== -1)
+      // Check if user exists
+      const index = model.users.findIndex((el) => el.email == data.email);
+      if (index !== -1)
+        return {
+          type: "ERROR",
+          msg: `User with email ${data.email} already exists`,
+          code: 409,
+        };
+
+      // Create user
+      const password = await encrypt(data.password);
+      model.users.push(
+        new model.User(
+          Date.now(),
+          data.name,
+          data.email,
+          password,
+          false,
+          data.lastName
+        )
+      );
+      // save JSON
+      jsonController.writeFileJSON();
+      // create token
+      const token = await jwt.sign(
+        { email: data.email },
+        process.env.SECRET_KEY,
+        {
+          expiresIn: "1h", // "1m", "1d", "24h"
+        }
+      );
       return {
-        type: "ERROR",
-        msg: `User with email ${data.email} already exists`,
-        code: 409,
+        type: "OK",
+        msg: `skopiuj poniższy link do przeglądarki w celu potwierdzenia konta Uwaga: link jest ważny przez godzinę`,
+        link: `http://localhost:${process.env.APP_PORT}/api/user/confirm/${token}`,
+        code: 201,
       };
-
-    // Create user
-    const password = await encrypt(data.password);
-    model.users.push(
-      new model.User(
-        Date.now(),
-        data.name,
-        data.email,
-        password,
-        false,
-        data.lastName
-      )
-    );
-    // save JSON
-    jsonController.writeFileJSON();
-    // create token
-    const token = await jwt.sign(
-      { email: data.email },
-      process.env.SECRET_KEY,
-      {
-        expiresIn: "1h", // "1m", "1d", "24h"
-      }
-    );
-    return {
-      type: "OK",
-      msg: `skopiuj poniższy link do przeglądarki http://localhost:${process.env.APP_PORT}/api/user/confirm/${token} w celu potwierdzenia konta Uwaga: link jest ważny przez godzinę`,
-      code: 201,
-    };
+    } catch (error) {
+      console.log(error);
+    }
   },
   validateToken: async (token) => {
     try {

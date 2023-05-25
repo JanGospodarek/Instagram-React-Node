@@ -21,6 +21,7 @@ const userRouter = async (req, res, path) => {
     case "POST":
       if (req.url == "/api/user/register") {
         const data = await getRequestData(req);
+
         const resData = await userController.register(JSON.parse(data));
 
         res.writeHead(resData.code, {
