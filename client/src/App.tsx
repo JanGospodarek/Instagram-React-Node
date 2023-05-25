@@ -1,12 +1,22 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import Home from "./Home";
+import Home from './components/Home';
+import { useEffect } from 'react';
+import Login from './components/Login';
+import Register from './components/Register';
 function App() {
+  useEffect(() => {
+    document.body.setAttribute('data-theme', 'autumn');
+  }, []);
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path='/' element={<Home />} />
+
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
         </Routes>
       </BrowserRouter>
     </>
