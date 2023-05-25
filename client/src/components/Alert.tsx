@@ -6,7 +6,6 @@ const Alert = (props: {
   msg: string;
   link?: string;
 }) => {
-  console.log(props.type, props.msg);
   const nav = useNavigate();
   return (
     <div

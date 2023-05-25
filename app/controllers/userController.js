@@ -88,7 +88,7 @@ module.exports = {
           expiresIn: "1h", // "1m", "1d", "24h"
         }
       );
-      return { code: 200, type: "OK", token };
+      return { code: 200, type: "OK", token, msg: "Logged in!" };
     } else {
       return { code: 401, type: "ERROR", msg: "Password is invalid" };
     }
