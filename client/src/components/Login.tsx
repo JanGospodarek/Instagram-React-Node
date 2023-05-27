@@ -2,9 +2,15 @@ import { useRef, useState } from "react";
 import compileValidityClasses from "../hooks/useCompileClassValidity";
 import Fetch from "../hooks/Fetch";
 import Alert from "./Alert";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { appActions } from "../store/store";
+
 const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const nav = useNavigate();
+  const dispatch = useDispatch();
   const [isAlert, setIsAlert] = useState<{
     type: string;
     msg: string;
@@ -45,7 +51,8 @@ const Login = () => {
             email: emailRef.current?.value,
             password: passwordRef.current?.value,
           },
-          "POST"
+          "POST",
+          {}
         )) as Response;
         const { type, msg, token } = await res.json();
 
@@ -54,6 +61,8 @@ const Login = () => {
         if (type == "OK") {
           //redirect to home page
           console.log("token", token);
+          localStorage.setItem("token", token);
+          nav("/main");
         } else {
           // refresh form
           setTimeout(() => {

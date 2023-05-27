@@ -12,7 +12,8 @@ const Verify = () => {
       const res = (await Fetch(
         `http://localhost:4000/api/user/confirm/${token}`,
         undefined,
-        "GET"
+        "GET",
+        {}
       )) as Response;
       return await res.json();
     };

@@ -88,7 +88,15 @@ module.exports = {
           expiresIn: "1h", // "1m", "1d", "24h"
         }
       );
-      return { code: 200, type: "OK", token, msg: "Logged in!" };
+      return {
+        code: 200,
+        type: "OK",
+        token,
+        msg: "Logged in!",
+        name: model.users[index].name,
+        lastName: model.users[index].lastName,
+        email: model.users[index].email,
+      };
     } else {
       return { code: 401, type: "ERROR", msg: "Password is invalid" };
     }

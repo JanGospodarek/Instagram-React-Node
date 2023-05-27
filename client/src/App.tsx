@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import { useEffect } from "react";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Main from "./components/Main";
 function App() {
   useEffect(() => {
     document.body.setAttribute("data-theme", "autumn");
@@ -14,6 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/main" element={<Main />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

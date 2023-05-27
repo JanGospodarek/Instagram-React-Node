@@ -58,7 +58,8 @@ const Register = () => {
             email: emailRef.current?.value,
             password: passwordRef.current?.value,
           },
-          "POST"
+          "POST",
+          {}
         )) as Response;
         const { type, msg, link } = await res.json();
 
