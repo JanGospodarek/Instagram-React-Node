@@ -3,9 +3,9 @@ import { RootState, appActions } from "../store/store";
 import { useEffect } from "react";
 import Fetch from "../hooks/Fetch";
 import { useNavigate } from "react-router-dom";
-import MainNavbar from "./MainNavbar";
-import { MainSidePanel } from "./MainSidePanel";
-import { MainPosts } from "./MainPosts";
+import MainNavbar from "./Main/MainNavbar";
+import { MainSidePanel } from "./Main/MainSidePanel";
+import { MainPosts } from "./Main/MainPosts";
 const Main = () => {
   const imie = useSelector((state: RootState) => state.app.name);
   const dispatch = useDispatch();
@@ -36,8 +36,7 @@ const Main = () => {
   });
   return (
     <>
-      <MainNavbar />
-
+      <MainNavbar name={imie} />
       <main className="w-full h-screen grid grid-cols-[1fr_5fr]">
         <MainSidePanel />
         <MainPosts />
