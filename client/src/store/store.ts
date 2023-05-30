@@ -8,6 +8,7 @@ const init = {
   email: "",
   token: "",
   image: "",
+  userName: "",
 };
 const appSlice = createSlice({
   name: "app",
@@ -22,12 +23,14 @@ const appSlice = createSlice({
           email: string;
           token: string;
           image: any;
+          userName: string;
         };
       }
     ) {
       state.name = action.payload.name;
       state.lastName = action.payload.lastName;
       state.email = action.payload.email;
+      state.userName = action.payload.userName;
       state.token = action.payload.token;
       state.image = action.payload.image;
       console.log(state.name);

@@ -12,17 +12,21 @@ export const MainSidePanel = () => {
   //prettier-ignore
   const themes= ["light", "dark", "cupcake", "emerald", "retro",  "garden", "forest","pastel","dracula", "autumn", "lemonade"]
   const token = useSelector((state: RootState) => state.app.token);
-  const [theme, setTheme] = useState("cupcake");
+
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "cupcake"
+  );
 
   const toggleTheme = (el: string) => {
     setTheme(el);
+    localStorage.setItem("theme", el);
   };
 
   const nav = useNavigate();
   useEffect(() => {
     console.log(theme);
 
-    document.querySelector("body")!.setAttribute("data-theme", theme);
+    document.querySelector("html")!.setAttribute("data-theme", theme);
   }, [theme]);
   const logout = async () => {
     try {
@@ -80,7 +84,7 @@ export const MainSidePanel = () => {
 
       <button
         className="btn btn-square btn-outline btn-secondary mb-5"
-        onClick={() => nav("/userSettings")}
+        onClick={() => nav("/settings")}
       >
         <Gear size={32} className="h-8 w-8" />
       </button>

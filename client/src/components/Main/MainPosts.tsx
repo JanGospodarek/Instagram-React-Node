@@ -7,11 +7,13 @@ export const MainPosts = () => {
         userName="example"
         imageData="s"
         tags={["lol", "photo", "wow"]}
+        date="27-01-2022"
       ></MainPost>
       <MainPost
         userName="example 1"
         imageData="s"
         tags={["lol 1", "photo 1", "wow 1"]}
+        date="27-01-2022"
       ></MainPost>
     </div>
   );

@@ -15,6 +15,7 @@ const Register = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
+  const userNameRef = useRef<HTMLInputElement>(null);
 
   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
@@ -37,6 +38,7 @@ const Register = () => {
       lastNameRef.current!.classList.add("input-error");
       errorWasFound = true;
     }
+
     if (password.length < 8) {
       passwordRef.current!.classList.add("input-error");
       errorWasFound = true;
@@ -57,6 +59,7 @@ const Register = () => {
             lastName: lastNameRef.current?.value,
             email: emailRef.current?.value,
             password: passwordRef.current?.value,
+            userName: userNameRef.current?.value,
           },
           "POST",
           {}
@@ -87,14 +90,14 @@ const Register = () => {
         <div className="hero-content flex-col ">
           <div className="text-center lg:text-left">
             <h1 className="text-6xl font-bold w-full text-center mb-12">
-              Register
+              Zarejestruj się
             </h1>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body">
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Name</span>
+                  <span className="label-text">Imie</span>
                 </label>
                 <input
                   type="text"
@@ -107,12 +110,25 @@ const Register = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Last name</span>
+                  <span className="label-text">Nazwisko</span>
                 </label>
                 <input
                   type="text"
                   maxLength={20}
                   ref={lastNameRef}
+                  placeholder="Your last name"
+                  className="input input-bordered focus:input-secondary"
+                  onChange={(e) => e.target.classList.remove("input-error")}
+                />
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Nazwa uzytkownika</span>
+                </label>
+                <input
+                  type="text"
+                  maxLength={20}
+                  ref={userNameRef}
                   placeholder="Your last name"
                   className="input input-bordered focus:input-secondary"
                   onChange={(e) => e.target.classList.remove("input-error")}
@@ -137,7 +153,7 @@ const Register = () => {
               </div>
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Password</span>
+                  <span className="label-text">Hasło</span>
                 </label>
                 <input
                   type="password"

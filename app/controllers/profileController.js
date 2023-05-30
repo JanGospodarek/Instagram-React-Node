@@ -7,11 +7,11 @@ module.exports = {
   getUserData: async (decoded, path) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);
 
-    const { email, name, lastName, id } = model.users[index];
+    const { email, name, lastName, id, userName } = model.users[index];
 
     return {
       type: "OK",
-      data: { email, name, lastName },
+      data: { email, name, lastName, userName },
       code: 200,
     };
   },

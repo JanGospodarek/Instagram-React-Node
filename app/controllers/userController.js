@@ -9,7 +9,13 @@ const fs = require("fs");
 module.exports = {
   register: async (data) => {
     try {
-      if (!data.name || !data.lastName || !data.email || !data.password)
+      if (
+        !data.name ||
+        !data.lastName ||
+        !data.email ||
+        !data.password ||
+        !data.userName
+      )
         return { type: "ERROR", msg: "Some of data is missing", code: 400 };
 
       // Check if user exists
@@ -21,6 +27,15 @@ module.exports = {
           code: 409,
         };
 
+      const index2 = model.users.findIndex(
+        (el) => el.userName == data.userName
+      );
+      if (index2 !== -1)
+        return {
+          type: "ERROR",
+          msg: `User with user name ${data.userName} already exists`,
+          code: 409,
+        };
       // Create user
       const password = await encrypt(data.password);
       model.users.push(
@@ -30,14 +45,15 @@ module.exports = {
           data.email,
           password,
           false,
-          data.lastName
+          data.lastName,
+          data.userName
         )
       );
       // save JSON
       jsonController.writeFileJSON();
       // create token
       const token = await jwt.sign(
-        { email: data.email },
+        { email: data.email, userName: data.userName },
         process.env.SECRET_KEY,
         {
           expiresIn: "1h", // "1m", "1d", "24h"
@@ -82,7 +98,7 @@ module.exports = {
     if (decrypted) {
       // create token
       const token = await jwt.sign(
-        { email: data.email },
+        { email: data.email, userName: model.users[index].userName },
         process.env.SECRET_KEY,
         {
           expiresIn: "1h", // "1m", "1d", "24h"

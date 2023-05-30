@@ -9,6 +9,8 @@ import { MainPosts } from "./Main/MainPosts";
 const Main = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const imie = useSelector((state: RootState) => state.app.userName);
+
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
@@ -26,7 +28,7 @@ const Main = () => {
         const data = await res.json();
 
         if (data.type == "OK") {
-          const { name, lastName, email } = data.data;
+          const { name, lastName, email, userName } = data.data;
           const res2 = (await Fetch(
             "http://localhost:4000/api/profile/photo",
             { email: email },
@@ -43,6 +45,7 @@ const Main = () => {
               lastName,
               token,
               image: URL.createObjectURL(imageData),
+              userName,
             })
           );
         } else {
@@ -55,7 +58,11 @@ const Main = () => {
   });
   return (
     <>
-      <MainPosts />
+      <MainNavbar name={imie} />
+      <main className="w-full h-screen grid grid-cols-[100px_1fr]">
+        <MainSidePanel />
+        <MainPosts />
+      </main>
     </>
   );
 };
