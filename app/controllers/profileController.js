@@ -4,12 +4,35 @@ const jsonController = require("./jsonController");
 const asyncFs = require("fs.promises");
 const fs = require("fs");
 module.exports = {
-  getUserData: async (decoded) => {
+  getUserData: async (decoded, path) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);
 
-    const { email, name, lastName } = model.users[index];
+    const { email, name, lastName, id } = model.users[index];
 
-    return { type: "OK", data: { email, name, lastName }, code: 200 };
+    return {
+      type: "OK",
+      data: { email, name, lastName },
+      code: 200,
+    };
+  },
+  getUserImage: async (decoded, path) => {
+    const index = model.users.findIndex((el) => el.email == decoded.email);
+    const { id } = model.users[index];
+
+    if (fs.existsSync(`${path}/profiles/${id}`)) {
+      fs.readFile(`${path}/profiles/${id}/profile.jpg`, (err, data) => {
+        if (err) {
+          res.statusCode = 500;
+          res.end("Error reading the image file");
+        } else {
+          // Set the appropriate headers
+          // Send the image data
+          return data;
+        }
+      });
+    } else {
+      return undefined;
+    }
   },
   mutateUserData: async (decoded, data) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);

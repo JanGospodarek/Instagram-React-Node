@@ -13,7 +13,7 @@ content-type: application/json
 
 ### wysłanie zdjęcia profilowego
 POST http://localhost:4000/api/profile HTTP/1.1
-authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWVAZW1haWwucGwiLCJpYXQiOjE2ODQ5OTgzMTgsImV4cCI6MTY4NTAwMTkxOH0._siYtM9zzOt_G20fLNn9TtkQIK-n7V6O-LUIXkxgdxI
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imphbi5nb3Nwb2RhcmVrMTJAZ21haWwuY29tIiwiaWF0IjoxNjg1NDMyMTY4LCJleHAiOjE2ODU0MzU3Njh9.xv360Uwbs44hwHH9ZE13rmg-6EmakSEiMDro4nzRaoE
 Content-Type: multipart/form-data; boundary=----FormBoundary1234
 
 ------FormBoundary1234

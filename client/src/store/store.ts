@@ -7,6 +7,7 @@ const init = {
   lastName: "",
   email: "",
   token: "",
+  image: "",
 };
 const appSlice = createSlice({
   name: "app",
@@ -20,6 +21,7 @@ const appSlice = createSlice({
           lastName: string;
           email: string;
           token: string;
+          image: any;
         };
       }
     ) {
@@ -27,6 +29,7 @@ const appSlice = createSlice({
       state.lastName = action.payload.lastName;
       state.email = action.payload.email;
       state.token = action.payload.token;
+      state.image = action.payload.image;
       console.log(state.name);
     },
   },

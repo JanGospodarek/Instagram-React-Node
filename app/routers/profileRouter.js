@@ -26,8 +26,12 @@ const profileRouter = async (req, res, path) => {
               res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
               return;
             }
+            res.setHeader("Content-Type", "image/jpeg");
 
-            const resData = await profileController.getUserData(decoded);
+            const resData = await profileController.getUserData(
+              decoded,
+              path + "/data"
+            );
             res.end(JSON.stringify(resData, null, 5));
           } catch (err) {
             //prettier-ignore
@@ -35,6 +39,7 @@ const profileRouter = async (req, res, path) => {
           }
         }
       }
+
       if (req.url == "/api/logout") {
         if (
           req.headers.authorization &&
@@ -68,6 +73,25 @@ const profileRouter = async (req, res, path) => {
       break;
 
     case "POST":
+      if (req.url == "/api/profile/photo") {
+        try {
+          const data = await getRequestData(req);
+          const parsed = JSON.parse(data);
+
+          const resData = await profileController.getUserImage(
+            parsed.email,
+            path + "/data"
+          );
+          res.setHeader("Content-Type", "image/jpeg");
+          res.setHeader("Content-Length", resData.length);
+
+          res.end(resData);
+        } catch (err) {
+          //prettier-ignore
+          res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
+        }
+      }
+
       if (req.url == "/api/profile") {
         if (
           req.headers.authorization &&

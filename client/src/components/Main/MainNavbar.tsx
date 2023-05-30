@@ -1,4 +1,12 @@
+import { useEffect } from "react";
+import Fetch from "../../hooks/Fetch";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+
 const MainNavbar = (props: { name: string }) => {
+  const image = useSelector((state: RootState) => state.app.image);
+  console.log(image);
+
   return (
     <div className="navbar bg-base-200">
       <div className="flex-1">
@@ -7,7 +15,7 @@ const MainNavbar = (props: { name: string }) => {
       <p>{props.name}</p>
 
       <button className="btn btn-ghost btn-circle avatar">
-        <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+        <img src={image} />
       </button>
     </div>
   );
