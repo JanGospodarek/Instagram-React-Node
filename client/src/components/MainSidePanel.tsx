@@ -1,0 +1,60 @@
+import { House } from "phosphor-react";
+import { PlusCircle } from "phosphor-react";
+import { Gear } from "phosphor-react";
+import { Power } from "phosphor-react";
+import { Palette } from "phosphor-react";
+import { useEffect, useState } from "react";
+export const MainSidePanel = () => {
+  //prettier-ignore
+  const themes= ["light", "dark", "cupcake", "emerald", "retro",  "garden", "forest","pastel","dracula", "autumn", "lemonade"]
+
+  const [theme, setTheme] = useState("cupcake");
+
+  const toggleTheme = (el: string) => {
+    setTheme(el);
+  };
+
+  useEffect(() => {
+    console.log(theme);
+
+    document.querySelector("body")!.setAttribute("data-theme", theme);
+  }, [theme]);
+
+  return (
+    <div className="w-full h-full flex flex-col items-center pt-10">
+      <button className="btn btn-square btn-outline btn-secondary mb-5">
+        <House size={32} className="h-8 w-8" />
+      </button>
+
+      <button className="btn btn-square btn-outline btn-secondary mb-5 ">
+        <PlusCircle size={32} className="h-8 w-8" />
+      </button>
+
+      <div className="dropdown dropdown-right">
+        <label
+          tabIndex={0}
+          className="btn btn-square btn-outline btn-secondary mb-5"
+        >
+          <Palette size={32} className="h-8 w-8" />
+        </label>
+        <ul
+          tabIndex={0}
+          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 ml-2"
+        >
+          {themes.map((el) => (
+            <li key={el}>
+              <a onClick={() => toggleTheme(el)}>{el}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <button className="btn btn-square btn-outline btn-secondary mb-5">
+        <Gear size={32} className="h-8 w-8" />
+      </button>
+      <button className="btn btn-square btn-outline btn-secondary mb-5">
+        <Power size={32} className="h-8 w-8" />
+      </button>
+    </div>
+  );
+};
