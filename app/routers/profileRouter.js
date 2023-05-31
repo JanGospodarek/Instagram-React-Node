@@ -8,6 +8,24 @@ const formidable = require("formidable");
 const profileRouter = async (req, res, path) => {
   switch (req.method) {
     case "GET":
+      if (req.url.match(/\/api\/profile\/photo\/(.*)/)) {
+        const userName = req.url.split("/")[req.url.split("/").length - 1];
+
+        try {
+          const resData = await profileController.getUserImage(
+            userName,
+            path + "/data"
+          );
+          res.setHeader("Content-Type", "image/jpg");
+          // res.setHeader("Content-Length", resData.length);
+          console.log("res", resData);
+
+          res.end(resData);
+        } catch (err) {
+          //prettier-ignore
+          res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
+        }
+      }
       if (req.url == "/api/profile") {
         if (
           req.headers.authorization &&
@@ -73,25 +91,6 @@ const profileRouter = async (req, res, path) => {
       break;
 
     case "POST":
-      if (req.url == "/api/profile/photo") {
-        try {
-          const data = await getRequestData(req);
-          const parsed = JSON.parse(data);
-
-          const resData = await profileController.getUserImage(
-            parsed.email,
-            path + "/data"
-          );
-          res.setHeader("Content-Type", "image/jpeg");
-          res.setHeader("Content-Length", resData.length);
-
-          res.end(resData);
-        } catch (err) {
-          //prettier-ignore
-          res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
-        }
-      }
-
       if (req.url == "/api/profile") {
         if (
           req.headers.authorization &&

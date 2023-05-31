@@ -15,34 +15,37 @@ module.exports = {
       code: 200,
     };
   },
-  getUserImage: async (decoded, path) => {
-    const index = model.users.findIndex((el) => el.email == decoded.email);
+  getUserImage: async (userName, path) => {
+    const index = model.users.findIndex((el) => el.userName == userName);
     const { id } = model.users[index];
-
-    if (fs.existsSync(`${path}/profiles/${id}`)) {
-      fs.readFile(`${path}/profiles/${id}/profile.jpg`, (err, data) => {
-        if (err) {
-          res.statusCode = 500;
-          res.end("Error reading the image file");
-        } else {
-          // Set the appropriate headers
-          // Send the image data
-          return data;
-        }
-      });
+    console.log(`${path}/profiles/${id}`);
+    if (await fs.existsSync(`${path}/profiles/${id}`)) {
+      return await asyncFs.readFile(`${path}/profiles/${id}/profile.jpg`);
     } else {
-      return undefined;
+      return await asyncFs.readFile(`${path}/default.png`);
     }
   },
   mutateUserData: async (decoded, data) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);
 
-    model.users[index].name = data.name;
-    model.users[index].lastName = data.lastName;
+    const index2 = model.users.findIndex(
+      (el) => el.userName == data.userName && el.email !== decoded.email
+    );
+    if (index2 !== -1) {
+      return {
+        type: "ERROR",
+        msg: "User with username " + data.userName + " already exists!",
+        code: 401,
+      };
+    } else {
+      model.users[index].name = data.name;
+      model.users[index].lastName = data.lastName;
+      model.users[index].userName = data.userName;
 
-    jsonController.writeFileJSON();
+      jsonController.writeFileJSON();
 
-    return { type: "OK", msg: "User data successfully changed", code: 200 };
+      return { type: "OK", msg: "User data successfully changed", code: 200 };
+    }
   },
   uploadProfileImage: async (decoded, form, req, path) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);

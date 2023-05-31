@@ -29,28 +29,21 @@ const Main = () => {
 
         if (data.type == "OK") {
           const { name, lastName, email, userName } = data.data;
-          const res2 = (await Fetch(
-            "http://localhost:4000/api/profile/photo",
-            { email: email },
-            "POST",
-            {}
-          )) as Response;
+          console.log(token);
 
-          const imageData = await res2.blob();
-          console.log(URL.createObjectURL(imageData));
           dispatch(
             appActions.login({
               name,
               email,
               lastName,
               token,
-              image: URL.createObjectURL(imageData),
               userName,
             })
           );
         } else {
           //handle Error
-          console.log("toke n error");
+
+          nav("/");
         }
       }
     };

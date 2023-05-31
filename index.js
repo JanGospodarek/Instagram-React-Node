@@ -39,7 +39,10 @@ http
       res.setHeader("Access-Control-Allow-Origin", "*");
       if (req.method === "OPTIONS") {
         // Set the necessary headers for preflight request
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"); // Specify the allowed HTTP methods
+        res.setHeader(
+          "Access-Control-Allow-Methods",
+          "GET, POST, PUT, DELETE, PATCH"
+        ); // Specify the allowed HTTP methods
         res.setHeader(
           "Access-Control-Allow-Headers",
           "Content-Type, Authorization"
