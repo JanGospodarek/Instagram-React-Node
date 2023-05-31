@@ -26,6 +26,7 @@ const profileRouter = async (req, res, path) => {
           res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
         }
       }
+
       if (req.url == "/api/profile") {
         if (
           req.headers.authorization &&
@@ -55,6 +56,20 @@ const profileRouter = async (req, res, path) => {
             //prettier-ignore
             res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
           }
+        }
+      }
+      if (req.url.match(/\/api\/profile\/username\/(.*)/)) {
+        const userName = req.url.split("/")[req.url.split("/").length - 1];
+        try {
+          const resData = await profileController.getUserDataByUsername(
+            userName,
+            path + "/data"
+          );
+          console.log(resData);
+          res.end(JSON.stringify(resData, null, 5));
+        } catch (err) {
+          //prettier-ignore
+          res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
         }
       }
 

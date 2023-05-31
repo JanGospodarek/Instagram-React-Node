@@ -17,21 +17,20 @@ export const Settings = () => {
     msg: string;
   } | null>(null);
 
-  // const nameRef = useRef<HTMLInputElement>(null);
-  // const lastNameRef = useRef<HTMLInputElement>(null);
-  // const userNameRef = useRef<HTMLInputElement>(null);
-  // const fileRef = useRef<HTMLInputElement>(null);
-
   const imie = useSelector((state: RootState) => state.app.name);
   const userName = useSelector((state: RootState) => state.app.userName);
   const lastName = useSelector((state: RootState) => state.app.lastName);
   const token = useSelector((state: RootState) => state.app.token);
 
-  const [nameVal, setName] = useState(imie);
-  const [lastNameVal, setLastName] = useState(lastName);
-  const [userNameVal, setUserName] = useState(userName);
+  const [nameVal, setName] = useState<string>(imie || "");
+  const [lastNameVal, setLastName] = useState<string>(lastName || "");
+  const [userNameVal, setUserName] = useState<string>(userName || "");
   const [fileVal, setFile] = useState<any>(null);
-
+  useEffect(() => {
+    if (nameVal == "") setName(imie);
+    if (lastNameVal == "") setLastName(lastName);
+    if (userNameVal == "") setUserName(userName);
+  }, [imie, userName, lastName]);
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
@@ -115,7 +114,7 @@ export const Settings = () => {
                 <input
                   type="text"
                   className="input input-bordered w-full max-w-xs"
-                  value={userNameVal}
+                  value={userNameVal as string}
                   onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
@@ -134,7 +133,7 @@ export const Settings = () => {
                 <input
                   type="text"
                   className="input input-bordered w-full max-w-xs"
-                  value={nameVal}
+                  value={nameVal as string}
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
@@ -153,7 +152,7 @@ export const Settings = () => {
                 <input
                   type="text"
                   className="input input-bordered w-full max-w-xs"
-                  value={lastNameVal}
+                  value={lastNameVal as string}
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </div>

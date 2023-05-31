@@ -5,6 +5,10 @@ const asyncFs = require("fs.promises");
 const fs = require("fs");
 module.exports = {
   getUserData: async (decoded, path) => {
+    // console.log(decoded);
+    // if (decoded.useUser) {
+    //
+    // } else {
     const index = model.users.findIndex((el) => el.email == decoded.email);
 
     const { email, name, lastName, id, userName } = model.users[index];
@@ -14,6 +18,26 @@ module.exports = {
       data: { email, name, lastName, userName },
       code: 200,
     };
+    // }
+  },
+  getUserDataByUsername: async (userName, path) => {
+    const index = model.users.findIndex((el) => el.userName == userName);
+    console.log(index);
+    if (index == -1) {
+      return {
+        type: "ERROR",
+        msg: "There is no user with username" + userName,
+        code: 200,
+      };
+    } else {
+      const { email, name, lastName, id, userName } = model.users[index];
+
+      return {
+        type: "OK",
+        data: { email, name, lastName, userName },
+        code: 200,
+      };
+    }
   },
   getUserImage: async (userName, path) => {
     const index = model.users.findIndex((el) => el.userName == userName);

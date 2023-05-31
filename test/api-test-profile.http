@@ -3,6 +3,7 @@ GET http://localhost:4000/api/profile HTTP/1.1
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWU0QGVtYWlsLnBsIiwiaWF0IjoxNjg0ODI5NDA4LCJleHAiOjE2ODQ4MzMwMDh9.21llQdra2yzVBK2G5Gv24fZ_-IxSQDvLVLxkXnjMj9E
 
 
+
 ### aktualizacja danych usera w jego profilu
 PATCH http://localhost:4000/api/profile HTTP/1.1
 authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hbWU0QGVtYWlsLnBsIiwiaWF0IjoxNjg0ODI5NDA4LCJleHAiOjE2ODQ4MzMwMDh9.21llQdra2yzVBK2G5Gv24fZ_-IxSQDvLVLxkXnjMj9E
