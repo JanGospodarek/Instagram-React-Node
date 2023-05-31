@@ -5,7 +5,7 @@ import { RootState, appActions } from "../store/store";
 import { Check } from "phosphor-react";
 import Fetch from "../hooks/Fetch";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Alert from "./Alert";
 
 export const Settings = () => {
@@ -85,9 +85,25 @@ export const Settings = () => {
       setIsAlert({ type: "ERROR", msg: data.msg });
     }
   };
-  const handlePhotoUpload = async () => {
-    if (fileVal !== null) {
-    }
+
+  const handlePhotoUpload = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent the form from submitting immediately
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4000/api/profile");
+
+    // Set custom headers
+    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        console.log("Form submitted successfully");
+      } else {
+        console.error("Error submitting form:", xhr.status);
+      }
+    };
+    // @ts-ignore
+    xhr.send(new FormData(e.target));
   };
   return (
     <>
@@ -170,18 +186,28 @@ export const Settings = () => {
                     Ustaw nowe zdjęcie profilowe
                   </span>
                 </label>
-                <input
-                  type="file"
-                  className="file-input file-input-bordered w-full  max-w-xs"
-                  onChange={(e) => setFile(e.target.value)}
-                />
+                <form
+                  action="http://localhost:4000/api/profile"
+                  method="post"
+                  encType="multipart/form-data"
+                  className="flex flex-row items-end"
+                  onSubmit={(e) => handlePhotoUpload(e)}
+                >
+                  <input
+                    type="file"
+                    name="file"
+                    className="file-input file-input-bordered w-full  max-w-xs"
+                    required
+                  />
+                  {/* <input type="hidden" name="token" value={token} /> */}
+                  <button
+                    type="submit"
+                    className="btn btn-square btn-outline btn-success ml-5"
+                  >
+                    <Check size={32} />
+                  </button>
+                </form>
               </div>
-              <button
-                className="btn btn-square btn-outline btn-success ml-5"
-                onClick={handlePhotoUpload}
-              >
-                <Check size={32} />
-              </button>
             </div>
           </div>
         </div>

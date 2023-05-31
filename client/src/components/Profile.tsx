@@ -76,9 +76,13 @@ export const Profile = () => {
         ) : (
           <div className="w-full   flex flex-col overflow-y-scroll ">
             <div className="flex flex-row items-center p-20 border-b-2 border-base-200">
-              <button className="btn btn-ghost btn-circle avatar w-36 h-36">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </button>
+              <div className="avatar">
+                <div className="w-36 rounded-full">
+                  <img
+                    src={`http://localhost:4000/api/profile/photo/${userName}`}
+                  />
+                </div>
+              </div>
               <h1 className="text-4xl font-bold	ml-16">{userName}</h1>
             </div>
             <div className="flex flex-row flex-wrap mt-16 justify-center">

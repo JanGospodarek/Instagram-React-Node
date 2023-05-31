@@ -127,8 +127,16 @@ const profileRouter = async (req, res, path) => {
             let form = formidable({});
             //prettier-ignore
             const resData = await profileController.uploadProfileImage(decoded,form, req, path + "/data");
-
-            res.end(JSON.stringify(resData, null, 5));
+            console.log(resData);
+            if (resData.type == "delete") {
+              console.log("delete");
+              //prettier-ignore
+              const resData2 = await profileController.uploadProfileImage(decoded,form, req, path + "/data");
+              console.log(resData2);
+              res.end(JSON.stringify(resData2, null, 5));
+            } else {
+              res.end(JSON.stringify(resData, null, 5));
+            }
           } catch (err) {
             //prettier-ignore
             res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
