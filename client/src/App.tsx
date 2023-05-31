@@ -24,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<Main />} />
         </Routes>
       </BrowserRouter>
     </>

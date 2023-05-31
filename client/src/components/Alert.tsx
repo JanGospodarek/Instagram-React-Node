@@ -5,6 +5,7 @@ const Alert = (props: {
   type: string;
   msg: string;
   link?: string;
+  noBtn?: boolean;
 }) => {
   const nav = useNavigate();
   return (
@@ -53,7 +54,10 @@ const Alert = (props: {
             Potwierdź konto
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={props.handleClose}>
+          <button
+            className={`btn btn-primary ${props.noBtn && "hidden"}`}
+            onClick={props.handleClose}
+          >
             Close
           </button>
         )}
