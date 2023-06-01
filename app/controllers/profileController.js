@@ -22,7 +22,6 @@ module.exports = {
   },
   getUserDataByUsername: async (userName, path) => {
     const index = model.users.findIndex((el) => el.userName == userName);
-    console.log(index);
     if (index == -1) {
       return {
         type: "ERROR",
@@ -42,7 +41,6 @@ module.exports = {
   getUserImage: async (userName, path) => {
     const index = model.users.findIndex((el) => el.userName == userName);
     const { id } = model.users[index];
-    console.log(`${path}/profiles/${id}`);
     if (await fs.existsSync(`${path}/profiles/${id}`)) {
       return await asyncFs.readFile(`${path}/profiles/${id}/profile.jpg`);
     } else {

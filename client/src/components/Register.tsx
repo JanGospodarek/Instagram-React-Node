@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import Fetch from "../hooks/Fetch";
-import compileValidityClasses from "../hooks/useCompileClassValidity";
+import compileValidityClasses from "../hooks/CompileClassValidity";
 import Alert from "./Alert";
 const Register = () => {
   const [password, setPassword] = useState("");

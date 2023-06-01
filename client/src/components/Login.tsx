@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import compileValidityClasses from "../hooks/useCompileClassValidity";
+import compileValidityClasses from "../hooks/CompileClassValidity";
 import Fetch from "../hooks/Fetch";
 import Alert from "./Alert";
 import { useNavigate } from "react-router-dom";
@@ -60,7 +60,6 @@ const Login = () => {
 
         if (type == "OK") {
           //redirect to home page
-          console.log("token", token);
           localStorage.setItem("token", token);
           nav("/main");
         } else {

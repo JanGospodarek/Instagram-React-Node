@@ -24,8 +24,6 @@ export const MainSidePanel = () => {
 
   const nav = useNavigate();
   useEffect(() => {
-    console.log(theme);
-
     document.querySelector("html")!.setAttribute("data-theme", theme);
   }, [theme]);
   const logout = async () => {

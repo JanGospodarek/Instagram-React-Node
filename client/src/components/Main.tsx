@@ -6,48 +6,12 @@ import { useNavigate } from "react-router-dom";
 import MainNavbar from "./Main/MainNavbar";
 import { MainSidePanel } from "./Main/MainSidePanel";
 import { MainPosts } from "./Main/MainPosts";
+import { useInitUserData } from "../hooks/useInitUserData";
 const Main = () => {
-  const dispatch = useDispatch();
-  const nav = useNavigate();
   const imie = useSelector((state: RootState) => state.app.userName);
-
+  const init = useInitUserData();
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-
-      if (token == null) {
-        nav("/");
-        return;
-      } else {
-        const res = (await Fetch(
-          "http://localhost:4000/api/profile",
-          undefined,
-          "GET",
-          { Authorization: `Bearer ${token}` }
-        )) as Response;
-        const data = await res.json();
-
-        if (data.type == "OK") {
-          const { name, lastName, email, userName } = data.data;
-          console.log(token);
-
-          dispatch(
-            appActions.login({
-              name,
-              email,
-              lastName,
-              token,
-              userName,
-            })
-          );
-        } else {
-          //handle Error
-
-          nav("/");
-        }
-      }
-    };
-    fetchUserData();
+    init();
   });
   return (
     <>

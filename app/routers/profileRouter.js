@@ -18,7 +18,6 @@ const profileRouter = async (req, res, path) => {
           );
           res.setHeader("Content-Type", "image/jpg");
           // res.setHeader("Content-Length", resData.length);
-          console.log("res", resData);
 
           res.end(resData);
         } catch (err) {
@@ -65,7 +64,6 @@ const profileRouter = async (req, res, path) => {
             userName,
             path + "/data"
           );
-          console.log(resData);
           res.end(JSON.stringify(resData, null, 5));
         } catch (err) {
           //prettier-ignore
@@ -86,10 +84,7 @@ const profileRouter = async (req, res, path) => {
               res.end(JSON.stringify({ type: "ERROR", msg: "Invalid token", code: 401 }, null, 5));
               return;
             }
-            console.log(
-              model.invalidTokens,
-              model.invalidTokens.includes(token)
-            );
+
             if (model.invalidTokens.includes(token)) {
               //prettier-ignore
               res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
@@ -127,12 +122,9 @@ const profileRouter = async (req, res, path) => {
             let form = formidable({});
             //prettier-ignore
             const resData = await profileController.uploadProfileImage(decoded,form, req, path + "/data");
-            console.log(resData);
             if (resData.type == "delete") {
-              console.log("delete");
               //prettier-ignore
               const resData2 = await profileController.uploadProfileImage(decoded,form, req, path + "/data");
-              console.log(resData2);
               res.end(JSON.stringify(resData2, null, 5));
             } else {
               res.end(JSON.stringify(resData, null, 5));

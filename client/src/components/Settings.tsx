@@ -7,6 +7,7 @@ import Fetch from "../hooks/Fetch";
 import { useNavigate } from "react-router-dom";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import Alert from "./Alert";
+import { useInitUserData } from "../hooks/useInitUserData";
 
 export const Settings = () => {
   const dispatch = useDispatch();
@@ -26,46 +27,16 @@ export const Settings = () => {
   const [lastNameVal, setLastName] = useState<string>(lastName || "");
   const [userNameVal, setUserName] = useState<string>(userName || "");
   const [fileVal, setFile] = useState<any>(null);
+
   useEffect(() => {
     if (nameVal == "") setName(imie);
     if (lastNameVal == "") setLastName(lastName);
     if (userNameVal == "") setUserName(userName);
   }, [imie, userName, lastName]);
+
+  const init = useInitUserData();
   useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem("token");
-
-      if (token == null) {
-        nav("/");
-        return;
-      } else {
-        const res = (await Fetch(
-          "http://localhost:4000/api/profile",
-          undefined,
-          "GET",
-          { Authorization: `Bearer ${token}` }
-        )) as Response;
-        const data = await res.json();
-
-        if (data.type == "OK") {
-          const { name, lastName, email, userName } = data.data;
-
-          dispatch(
-            appActions.login({
-              name,
-              email,
-              lastName,
-              token,
-              userName,
-            })
-          );
-        } else {
-          //handle Error
-          nav("/");
-        }
-      }
-    };
-    fetchUserData();
+    init();
   });
   const handleSubmit = async () => {
     const res = (await Fetch(

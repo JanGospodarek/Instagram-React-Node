@@ -33,7 +33,6 @@ const appSlice = createSlice({
       state.userName = action.payload.userName;
       state.token = action.payload.token;
       // state.image = action.payload.image;
-      console.log(state.name);
     },
   },
 });

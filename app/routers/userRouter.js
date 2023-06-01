@@ -7,7 +7,6 @@ const userRouter = async (req, res, path) => {
     case "GET":
       if (req.url.match(/\/api\/user\/confirm\/(.*)/)) {
         const token = req.url.split("/")[req.url.split("/").length - 1];
-        console.log("token", token);
         const resData = await userController.validateToken(token);
 
         res.writeHead(resData.code, {

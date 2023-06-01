@@ -20,7 +20,6 @@ const Verify = () => {
 
     if (!fetchRef.current)
       fetchData().then((data) => {
-        console.log(data);
         setResData(data.type);
       });
 
@@ -28,7 +27,6 @@ const Verify = () => {
       fetchRef.current = true;
     };
   }, [token]);
-  console.log(resData);
 
   return (
     <div className="hero min-h-screen bg-base-200">

@@ -11,6 +11,7 @@ import { MainSidePanel } from "./components/Main/MainSidePanel";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { Settings } from "./components/Settings";
+import { AddPhoto } from "./components/AddPhoto";
 function App() {
   return (
     <>
@@ -21,6 +22,7 @@ function App() {
           <Route path="/profile/:user" element={<Profile />} />
 
           <Route path="/login" element={<Login />} />
+          <Route path="/addPhoto" element={<AddPhoto />} />
           <Route path="/register" element={<Register />} />
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="/settings" element={<Settings />} />
