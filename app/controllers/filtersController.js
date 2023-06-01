@@ -20,12 +20,26 @@ module.exports = {
     const newName = photoUrlArr.join(".");
 
     switch (data.filter) {
-      case "tint":
+      case "saturate":
         await sharp(path + "/data" + photo.url)
-          .tint({ r: data.r, g: data.g, b: data.b })
+          .modulate({ saturation: data.amount / 100 })
           .toFile(path + "/data" + newName);
         break;
-
+      case "brightness":
+        await sharp(path + "/data" + photo.url)
+          .modulate({ brightness: data.amount / 100 })
+          .toFile(path + "/data" + newName);
+        break;
+      case "invert":
+        await sharp(path + "/data" + photo.url)
+          .negate()
+          .toFile(path + "/data" + newName);
+        break;
+      case "grayscale":
+        await sharp(path + "/data" + photo.url)
+          .grayscale()
+          .toFile(path + "/data" + newName);
+        break;
       default:
         break;
     }
