@@ -25,14 +25,11 @@ export const Settings = () => {
 
   const [nameVal, setName] = useState<string>(imie || "");
   const [lastNameVal, setLastName] = useState<string>(lastName || "");
-  const [userNameVal, setUserName] = useState<string>(userName || "");
-  const [fileVal, setFile] = useState<any>(null);
 
   useEffect(() => {
     if (nameVal == "") setName(imie);
     if (lastNameVal == "") setLastName(lastName);
-    if (userNameVal == "") setUserName(userName);
-  }, [imie, userName, lastName]);
+  }, [imie, lastName]);
 
   const init = useInitUserData();
   useEffect(() => {
@@ -44,7 +41,6 @@ export const Settings = () => {
       {
         name: nameVal,
         lastName: lastNameVal,
-        userName: userNameVal,
       },
       "PATCH",
       { Authorization: `Bearer ${token}` }
@@ -69,6 +65,7 @@ export const Settings = () => {
     xhr.onload = function () {
       if (xhr.status === 200) {
         console.log("Form submitted successfully");
+        setIsAlert({ type: "OK", msg: "Zdjęcie zmienione! Przeładuj stronę!" });
       } else {
         console.error("Error submitting form:", xhr.status);
       }
@@ -94,7 +91,7 @@ export const Settings = () => {
           </div>
           <div className="flex flex-col pl-4">
             <div className="flex flex-row items-end">
-              <div className="form-control w-full max-w-xs">
+              {/* <div className="form-control w-full max-w-xs">
                 <label className="label">
                   <span className="label-text">Nazwa uzytkownika</span>
                 </label>
@@ -110,7 +107,7 @@ export const Settings = () => {
                 onClick={handleSubmit}
               >
                 <Check size={32} />
-              </button>
+              </button> */}
             </div>
             <div className="flex flex-row items-end">
               <div className="form-control w-full max-w-xs">

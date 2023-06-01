@@ -50,24 +50,12 @@ module.exports = {
   mutateUserData: async (decoded, data) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);
 
-    const index2 = model.users.findIndex(
-      (el) => el.userName == data.userName && el.email !== decoded.email
-    );
-    if (index2 !== -1) {
-      return {
-        type: "ERROR",
-        msg: "User with username " + data.userName + " already exists!",
-        code: 401,
-      };
-    } else {
-      model.users[index].name = data.name;
-      model.users[index].lastName = data.lastName;
-      model.users[index].userName = data.userName;
+    model.users[index].name = data.name;
+    model.users[index].lastName = data.lastName;
 
-      jsonController.writeFileJSON();
+    jsonController.writeFileJSON();
 
-      return { type: "OK", msg: "User data successfully changed", code: 200 };
-    }
+    return { type: "OK", msg: "User data successfully changed", code: 200 };
   },
   uploadProfileImage: async (decoded, form, req, path) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);

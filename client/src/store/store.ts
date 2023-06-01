@@ -9,6 +9,7 @@ const init = {
   token: "",
   image: "",
   userName: "",
+  posts: [] as any[],
 };
 const appSlice = createSlice({
   name: "app",
@@ -33,6 +34,9 @@ const appSlice = createSlice({
       state.userName = action.payload.userName;
       state.token = action.payload.token;
       // state.image = action.payload.image;
+    },
+    fetchPhotos(state, action: { payload: { posts: any[] } }) {
+      state.posts = action.payload.posts;
     },
   },
 });

@@ -138,7 +138,15 @@ module.exports = {
         if (
           await fs.existsSync(`${path}/albums/${model.photos[index].album}`)
         ) {
-          return await asyncFs.readFile(`${path}${model.photos[index].url}`);
+          if (model.photos[index].history.length > 1) {
+            const lastUrl =
+              model.photos[index].history[
+                model.photos[index].history.length - 1
+              ].url;
+            return await asyncFs.readFile(`${path}${lastUrl}`);
+          } else {
+            return await asyncFs.readFile(`${path}${model.photos[index].url}`);
+          }
         } else {
           return undefined;
         }
