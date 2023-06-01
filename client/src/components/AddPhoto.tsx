@@ -7,21 +7,29 @@ import { MainSidePanel } from "./Main/MainSidePanel";
 import { Check } from "phosphor-react";
 import Fetch from "../hooks/Fetch";
 import { Plus } from "phosphor-react";
+import Alert from "./Alert";
 export const AddPhoto = () => {
   const imie = useSelector((state: RootState) => state.app.userName);
   const token = useSelector((state: RootState) => state.app.token);
   const [photoId, setPhotoId] = useState<number | null>(null);
   const [tagVal, setTagVal] = useState<string>("");
-  const [filter, setFilter] = useState<string>("");
+  const [filter, setFilter] = useState<string>("none");
   const [color, setColor] = useState<string>("");
   const [amount, setAmount] = useState<number>(100);
   const [tags, setTags] = useState<string[]>([]);
-  const [responses, setResponses] = useState<boolean[] | null[]>([null, null]);
+  const [responses, setResponses] = useState<any>([null, null]);
   const imageRef = useRef<HTMLImageElement | null>(null);
+  const [isAlert, setIsAlert] = useState<{
+    type: string;
+    msg: string;
+  } | null>(null);
   const init = useInitUserData();
   useEffect(() => {
     init();
   });
+  const handleCloseAlert = () => {
+    setIsAlert(null);
+  };
   useEffect(() => {
     if (imageRef.current)
       if (filter == "none") {
@@ -63,6 +71,7 @@ export const AddPhoto = () => {
     xhr.onload = function () {
       if (xhr.status === 200) {
         console.log("Form submitted successfully");
+        setIsAlert({ type: "OK", msg: "Post dodany! Teraz pora na edycję!" });
         console.log(xhr.response);
         setTimeout(() => fetchPhoto(), 1000);
       } else {
@@ -84,17 +93,28 @@ export const AddPhoto = () => {
       )) as Response;
       const data = await res.json();
       //handle Error
+      console.log(data);
+
       if (data.type == "ERROR") {
-        setResponses((state) => {
-          state[0] = false;
-          return state;
+        // setResponses((state: any) => {
+        //   const copy = [...state];
+        //   copy[0] = true;
+        //   return copy;
+        // });
+        setIsAlert({
+          type: "ERROR",
+          msg: "Błąd podczas aktualizowania dancyh posta!",
         });
       } else {
-        setResponses((state) => {
-          state[0] = true;
-          return state;
-        });
+        setIsAlert({ type: "OK", msg: "Zaktualizowano dane posta!" });
+
+        // setResponses((state: any) => {
+        //   const copy = [...state];
+        //   copy[0] = true;
+        //   return copy;
+        // });
       }
+      console.log(responses);
     }
 
     if (tags.length > 0) {
@@ -112,24 +132,46 @@ export const AddPhoto = () => {
       )) as Response;
       const data = await res.json();
       //handle Error
+      console.log(data);
+
       if (data.type == "ERROR") {
-        setResponses((state) => {
-          state[1] = false;
-          return state;
+        // setResponses((state: any) => {
+        //   const copy = [...state];
+        //   copy[1] = false;
+        //   return copy;
+        // });
+        setIsAlert({
+          type: "ERROR",
+          msg: "Błąd podczas aktualizowania dancyh posta!",
         });
       } else {
-        setResponses((state) => {
-          state[1] = true;
-          return state;
-        });
+        setIsAlert({ type: "OK", msg: "Zaktualizowano dane posta!" });
+
+        // setResponses((state: any) => {
+        //   const copy = [...state];
+        //   copy[1] = true;
+        //   return copy;
+        // });
       }
+      console.log(responses);
     }
   };
   useEffect(() => {
-    if (responses[0] && (responses[1] || responses[1] == null)) {
-      ///alert success
-      console.log("OK!!");
-    }
+    // let res1 = false,
+    //   res2 = false;
+    // if (responses[0] && (responses[1] || responses[1] == null)) {
+    //   ///alert success
+    //   console.log("OK!!");
+    //   res1 = true;
+    // }
+    // if (responses[1] && (responses[0] || responses[0] == null)) {
+    //   ///alert success
+    //   console.log("OK!!");
+    //   res2 = true;
+    // }
+    // if (res1 && res2) {
+    //   console.log("kokss");
+    // }
   }, [responses]);
   return (
     <>
@@ -163,8 +205,10 @@ export const AddPhoto = () => {
             </div>
             {photoId && (
               <>
+                <div className="divider mt-5">Edycja dodanego posta</div>
+
                 <div className="flex flex-row items-end">
-                  <div className="form-control w-full max-w-xs mt-5">
+                  <div className="form-control w-full max-w-xs ">
                     <input
                       type="text"
                       className="input input-bordered w-full "
@@ -195,7 +239,7 @@ export const AddPhoto = () => {
                 <div className="flex flex-row mt-8">
                   Filtry
                   <select
-                    className="select select-bordered w-full select-sm w-28 ml-5"
+                    className="select select-bordered  select-sm w-28 ml-5"
                     onChange={(e) => setFilter(e.target.value)}
                     defaultValue="none"
                   >
@@ -257,6 +301,15 @@ export const AddPhoto = () => {
           </div>
         </div>
       </main>
+      {isAlert ? (
+        <Alert
+          handleClose={handleCloseAlert}
+          type={isAlert.type}
+          msg={isAlert.msg}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
