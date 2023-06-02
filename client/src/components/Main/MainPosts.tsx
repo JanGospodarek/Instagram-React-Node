@@ -21,7 +21,7 @@ export const MainPosts = () => {
       if (data.type == "ERROR") {
         //handle error
       } else {
-        dispatch(appActions.fetchPhotos({ posts: data }));
+        dispatch(appActions.fetchPhotos({ posts: data.reverse() }));
       }
     };
     fetchData();

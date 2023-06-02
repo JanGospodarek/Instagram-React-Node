@@ -173,7 +173,7 @@ const Register = () => {
                   className="btn btn-outline btn-primary"
                   onClick={handleSubmit}
                 >
-                  Register!
+                  Dalej
                 </button>
               </div>
             </div>

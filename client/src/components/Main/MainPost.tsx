@@ -22,7 +22,7 @@ export const MainPost = (props: {
               />
             </div>
           </button>
-          <p className="text-primary text-lg ml-4">{userName}</p>
+          <p className=" text-lg ml-4">{userName}</p>
         </div>
 
         <div className="flex justify-end items-center">
@@ -38,7 +38,7 @@ export const MainPost = (props: {
       </div>
       <div className="flex flex-row mt-5 ml-16">
         {tags.map((tag: any) => (
-          <div key={tag} className="badge ml-2 badge-outline">
+          <div key={tag} className="badge ml-2 badge-outline badge-primary">
             {tag.name}
           </div>
         ))}

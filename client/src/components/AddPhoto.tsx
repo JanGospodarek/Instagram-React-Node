@@ -221,8 +221,15 @@ export const AddPhoto = () => {
                   <button
                     className="btn btn-square btn-outline btn-success ml-5"
                     onClick={() => {
-                      setTags((state) => [...state, tagVal]);
-                      setTagVal("");
+                      if (!tags.includes(tagVal)) {
+                        setTags((state) => [...state, tagVal]);
+                        setTagVal("");
+                      } else {
+                        setIsAlert({
+                          type: "ERROR",
+                          msg: `Tag ${tagVal} został juz dodany do zdjęcia`,
+                        });
+                      }
                     }}
                   >
                     <Plus size={32} />

@@ -82,10 +82,34 @@ const imageRouter = async (req, res, path) => {
       break;
     case "DELETE":
       if (req.url.match(/\/api\/photos\/([0-9]+)/)) {
-        const id = req.url.split("/")[req.url.split("/").length - 1];
-        const msg = fileController.deleteFile(id, path + "/data");
+        if (
+          req.headers.authorization &&
+          req.headers.authorization.startsWith("Bearer")
+        ) {
+          try {
+            const token = req.headers.authorization.split(" ")[1];
+            console.log(token);
+            const decoded = await jwt.verify(token, process.env.SECRET_KEY);
 
-        res.end(JSON.stringify(msg, null, 5));
+            if (!decoded) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Invalid token", code: 401 }, null, 5));
+              return;
+            }
+            if (model.invalidTokens.includes(token)) {
+              //prettier-ignore
+              res.end(JSON.stringify({ type: "ERROR", msg: "Token expired", code: 401 }, null, 5));
+              return;
+            }
+            const id = req.url.split("/")[req.url.split("/").length - 1];
+            const msg = fileController.deleteFile(id, path + "/data");
+
+            res.end(JSON.stringify(msg, null, 5));
+          } catch (err) {
+            //prettier-ignore
+            res.end(JSON.stringify({ type: "ERROR", msg: err.message, code: 401 },null,));
+          }
+        }
       }
 
       break;

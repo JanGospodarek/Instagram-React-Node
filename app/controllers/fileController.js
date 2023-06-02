@@ -61,7 +61,7 @@ module.exports = {
     } else {
       const index = model.photos.findIndex((el) => el.id == id);
       if (index !== -1) return model.photos[index];
-      else return { msg: "There is no photo with id " + id };
+      else return { msg: "Brak zdjęcia z id: " + id };
     }
   },
   updateFile: (data) => {
@@ -84,13 +84,18 @@ module.exports = {
           });
         }
       } else {
-        model.photos[index].tags.push(...data.data);
+        data.data.forEach((tag) => {
+          const i = model.photos[index].tags.findIndex(
+            (el) => el.name == tag.name
+          );
+          if (i == -1) model.photos[index].tags.push(tag);
+        });
       }
       jsonController.writeFileJSON();
 
       return model.photos[index];
     } else {
-      return { msg: "Photo with id " + data.id + " does not exist" };
+      return { msg: "Nie istnieje zdjęcie z id " + data.id };
     }
   },
   deleteFile: (id, path) => {
@@ -111,8 +116,8 @@ module.exports = {
         //   }
         // });
       });
-      return { msg: "Successfully deleted photo with id " + id };
-    } else return { msg: "There is no photo with id " + id };
+      return { type: "OK", msg: "Usunięto zdjęcie!" };
+    } else return { type: "ERROR", msg: "Brak zdjęcia z id " + id };
   },
   getImage: async (id, filter, path) => {
     const index = model.photos.findIndex((el) => el.id == id);
@@ -131,7 +136,7 @@ module.exports = {
         else
           return {
             type: "ERROR",
-            msg: "There is no filter " + filter + " on photo " + id,
+            msg: "Nie ma filtra " + filter + " na zdjęciu" + id,
           };
       } else {
         // const { id } = model.users[index];
@@ -153,7 +158,7 @@ module.exports = {
         //read photo
       }
     } else {
-      return { type: "ERROR", msg: "There is no file with id " + id };
+      return { type: "ERROR", msg: "Brak pliku z id " + id };
     }
   },
 };

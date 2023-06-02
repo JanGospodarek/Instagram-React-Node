@@ -25,7 +25,7 @@ module.exports = {
     if (index == -1) {
       return {
         type: "ERROR",
-        msg: "There is no user with username" + userName,
+        msg: "Nie ma uzytkownika z nazwą " + userName,
         code: 200,
       };
     } else {
@@ -55,7 +55,7 @@ module.exports = {
 
     jsonController.writeFileJSON();
 
-    return { type: "OK", msg: "User data successfully changed", code: 200 };
+    return { type: "OK", msg: "Zmieniono dane uzytkownika", code: 200 };
   },
   uploadProfileImage: async (decoded, form, req, path) => {
     const index = model.users.findIndex((el) => el.email == decoded.email);

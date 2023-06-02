@@ -13,7 +13,7 @@ module.exports = {
       model.tagsObjects.push({ id: model.tags.length, ...data });
       return model.tagsObjects;
     } else {
-      return "Tag with name " + data.name + " already exists";
+      return "Tag " + data.name + " juz istnieje";
     }
   },
 };

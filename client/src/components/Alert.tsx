@@ -58,7 +58,7 @@ const Alert = (props: {
             className={`btn btn-primary ${props.noBtn && "hidden"}`}
             onClick={props.handleClose}
           >
-            Close
+            Zamknij
           </button>
         )}
       </div>

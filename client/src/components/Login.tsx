@@ -126,7 +126,7 @@ const Login = () => {
                   className="btn btn-outline btn-primary"
                   onClick={handleSubmit}
                 >
-                  Login
+                  Dalej
                 </button>
               </div>
             </div>

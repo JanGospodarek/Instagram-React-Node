@@ -23,7 +23,7 @@ module.exports = {
       if (index !== -1)
         return {
           type: "ERROR",
-          msg: `User with email ${data.email} already exists`,
+          msg: `Uzytkownik z emailem ${data.email} juz istnieje`,
           code: 409,
         };
 
@@ -33,7 +33,7 @@ module.exports = {
       if (index2 !== -1)
         return {
           type: "ERROR",
-          msg: `User with user name ${data.userName} already exists`,
+          msg: `Uzytkownik z nazwą ${data.userName} juz istnieje`,
           code: 409,
         };
       // Create user
@@ -84,16 +84,21 @@ module.exports = {
       // save JSON
       jsonController.writeFileJSON();
 
-      return { type: "OK", msg: "User confirmed!", code: 200 };
+      return { type: "OK", msg: "Uzytkownik potwierdzony", code: 200 };
     } catch (ex) {
       return { type: "ERROR", msg: ex.message, code: 401 };
     }
   },
   login: async (data) => {
     const index = model.users.findIndex((el) => el.email == data.email);
-    if (index == -1) return { code: 404, type: "ERROR", msg: "User not found" };
+    if (index == -1)
+      return { code: 404, type: "ERROR", msg: "Nie znaleziono uzytkownika" };
     if (!model.users[index].confirmed)
-      return { code: 400, type: "ERROR", msg: "User is not confirmed" };
+      return {
+        code: 400,
+        type: "ERROR",
+        msg: "Uzytkownik nie ma patwierdzonego konta",
+      };
     const decrypted = await decrypt(data.password, model.users[index].password);
     if (decrypted) {
       // create token
@@ -114,12 +119,12 @@ module.exports = {
         email: model.users[index].email,
       };
     } else {
-      return { code: 401, type: "ERROR", msg: "Password is invalid" };
+      return { code: 401, type: "ERROR", msg: "Hasło nieprawidłowe" };
     }
   },
   logout: async (token) => {
     model.invalidTokens.push(token);
     await jsonController.writeFileJSON();
-    return { code: 200, type: "OK", msg: "Logged out" };
+    return { code: 200, type: "OK", msg: "Wylogowano" };
   },
 };

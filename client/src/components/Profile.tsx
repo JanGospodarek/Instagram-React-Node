@@ -7,20 +7,28 @@ import { MainSidePanel } from "./Main/MainSidePanel";
 import { useEffect, useState } from "react";
 import Fetch from "../hooks/Fetch";
 import Alert from "./Alert";
+import { useInitUserData } from "../hooks/useInitUserData";
 
 export const Profile = () => {
   const { user } = useParams();
   const dispatch = useDispatch();
   const nav = useNavigate();
   const myUserName = useSelector((state: RootState) => state.app.userName);
+  const photos = useSelector((state: RootState) => state.app.posts);
+  const init = useInitUserData();
+
   const [isAlert, setIsAlert] = useState<{
     type: string;
     msg: string;
   } | null>(null);
   const [userName, setUserName] = useState("");
+  const [userPhotos, setUserPhotos] = useState<any[]>([]);
   const handleCloseAlert = () => {
     setIsAlert(null);
   };
+  useEffect(() => {
+    init();
+  }, []);
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
@@ -41,16 +49,23 @@ export const Profile = () => {
         if (data.type == "OK") {
           const { userName } = data.data;
 
-          // dispatch(
-          //   appActions.login({
-          //     name,
-          //     email,
-          //     lastName,
-          //     token,
-          //     userName,
-          //   })
-          // );
           setUserName(userName);
+
+          const res2 = (await Fetch(
+            "http://localhost:4000/api/photos",
+            undefined,
+            "GET",
+            {}
+          )) as Response;
+          const data2 = await res2.json();
+          console.log(data2);
+
+          const filtered: any[] = [];
+          data2.forEach((photo: any) => {
+            if (photo.album == user) filtered.push(photo);
+          });
+          setUserPhotos(filtered);
+          console.log(userPhotos);
         } else {
           //handle Error
           // nav("/");
@@ -59,7 +74,7 @@ export const Profile = () => {
       }
     };
     fetchUserData();
-  });
+  }, []);
   //handle if users exists or not etc
   return (
     <>
@@ -86,13 +101,22 @@ export const Profile = () => {
               <h1 className="text-4xl font-bold	ml-16">{userName}</h1>
             </div>
             <div className="flex flex-row flex-wrap mt-16 justify-center">
-              <label
-                htmlFor="my-modal-4"
-                className="w-48 h-48 border-2 border-black rounded-lg m-4"
-              >
-                <img src="" alt="" />
-              </label>
-              <ProfilePhotoCard id="my-modal-4" />
+              {userPhotos.map((photo: any) => (
+                <>
+                  <label htmlFor={photo.id} className="w-48 h-48  m-4">
+                    <img
+                      className="rounded-lg"
+                      src={`http://localhost:4000/api/photos/file/${photo.id}`}
+                    />
+                  </label>
+                  <ProfilePhotoCard
+                    id={photo.id}
+                    tags={photo.tags}
+                    userName={photo.album}
+                    date={new Date(photo.id)}
+                  />
+                </>
+              ))}
             </div>
           </div>
         )}
