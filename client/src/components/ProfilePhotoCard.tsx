@@ -29,6 +29,7 @@ export const ProfilePhotoCard = (props: {
     const data = await res.json();
     setIsAlert({ type: data.type, msg: data.msg });
     if (data.type == "OK") {
+      setTimeout(() => window.location.reload(), 3000);
     }
   };
   return (

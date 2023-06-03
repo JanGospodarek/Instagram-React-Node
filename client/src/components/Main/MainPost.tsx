@@ -34,12 +34,12 @@ export const MainPost = (props: {
           src={`http://localhost:4000/api/photos/file/${props.id}`}
           style={{ width: "500px" }}
           className="rounded-lg"
-        />{" "}
+        />
       </div>
       <div className="flex flex-row mt-5 ml-16 flex-wrap">
         {tags.map((tag: any) => (
           <div
-            key={tag}
+            key={Math.random()}
             className="badge ml-2 badge-outline badge-primary mb-1"
           >
             {tag.name}

@@ -101,7 +101,7 @@ export const Profile = () => {
               <h1 className="text-4xl font-bold	ml-16">{userName}</h1>
             </div>
             <div className="flex flex-row flex-wrap mt-16 justify-center">
-              {userPhotos.map((photo: any) => (
+              {userPhotos.reverse().map((photo: any) => (
                 <>
                   <label htmlFor={photo.id} className="w-48 h-48  m-4">
                     <img
@@ -114,6 +114,7 @@ export const Profile = () => {
                     tags={photo.tags}
                     userName={photo.album}
                     date={new Date(photo.id)}
+                    key={Math.random()}
                   />
                 </>
               ))}

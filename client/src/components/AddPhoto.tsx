@@ -13,7 +13,7 @@ export const AddPhoto = () => {
   const token = useSelector((state: RootState) => state.app.token);
   const [photoId, setPhotoId] = useState<number | null>(null);
   const [inputError, setInputError] = useState<boolean>(false);
-  const [tagVal, setTagVal] = useState<string>("");
+  const [tagVal, setTagVal] = useState<string>("#");
   const [filter, setFilter] = useState<string>("none");
   const [color, setColor] = useState<string>("");
   const [amount, setAmount] = useState<number>(100);
@@ -121,7 +121,7 @@ export const AddPhoto = () => {
         });
       } else {
         setIsAlert({ type: "OK", msg: "Zaktualizowano dane posta!" });
-
+        setTimeout(() => window.location.reload(), 3000);
         // setResponses((state: any) => {
         //   const copy = [...state];
         //   copy[0] = true;
@@ -264,9 +264,11 @@ export const AddPhoto = () => {
                     }`}
                     onClick={() => {
                       if (inputError) return;
+                      if (tagVal == "#") return;
+
                       if (!tags.includes(tagVal)) {
                         setTags((state) => [...state, tagVal]);
-                        setTagVal("");
+                        setTagVal("#");
                       } else {
                         setIsAlert({
                           type: "ERROR",
@@ -281,7 +283,7 @@ export const AddPhoto = () => {
                 <div className="flex flex-row flex-wrap items-center mt-8">
                   Tagi:
                   {tags.map((tag) => (
-                    <div className="indicator ml-4 ">
+                    <div className="indicator ml-4 mt-4" key={Math.random()}>
                       <button
                         className="indicator-item badge badge-error p-1"
                         onClick={() => {
@@ -296,9 +298,7 @@ export const AddPhoto = () => {
                         <Trash />
                       </button>
 
-                      <div key={tag} className="badge badge-outline">
-                        {tag}
-                      </div>
+                      <div className="badge badge-outline">{tag}</div>
                     </div>
                   ))}
                 </div>
@@ -320,8 +320,8 @@ export const AddPhoto = () => {
                       className="ml-5"
                       min={1}
                       step={1}
-                      max={100}
-                      defaultValue={50}
+                      max={150}
+                      defaultValue={100}
                       type="range"
                       onChange={(e) => setAmount(Number(e.target.value))}
                     />
