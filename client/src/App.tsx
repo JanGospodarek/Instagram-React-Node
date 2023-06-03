@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { Settings } from "./components/Settings";
 import { AddPhoto } from "./components/AddPhoto";
+import { TokenExpired } from "./components/TokenExpired";
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/verify/:token" element={<Verify />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/tokenExpired" element={<TokenExpired />} />
           <Route path="*" element={<Main />} />
         </Routes>
       </BrowserRouter>

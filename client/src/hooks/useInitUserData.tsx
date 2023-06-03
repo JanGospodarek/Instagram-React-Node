@@ -38,7 +38,7 @@ export const useInitUserData = () => {
       } else {
         //handle Error
 
-        nav("/");
+        nav("/tokenExpired");
       }
     }
   };
