@@ -65,7 +65,7 @@ export const ProfilePhotoCard = (props: {
             {props.tags.map((tag: any) => (
               <div
                 key={tag.name}
-                className="badge ml-2 badge-outline badge-primary"
+                className="badge ml-2 badge-outline badge-primary mb-1"
               >
                 {tag.name}
               </div>

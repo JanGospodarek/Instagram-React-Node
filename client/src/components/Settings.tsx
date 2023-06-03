@@ -75,8 +75,8 @@ export const Settings = () => {
   };
   return (
     <>
-      <MainNavbar name={imie} />
-      <main className="w-full h-screen grid grid-cols-[100px_1fr]">
+      {/* <MainNavbar name={imie} /> */}
+      <main className="w-full h-screen grid grid-cols-[200px_1fr]">
         <MainSidePanel />
         <div className="w-full   flex flex-col overflow-y-scroll ">
           <div className="flex flex-row items-center p-20 border-b-2 border-base-200">

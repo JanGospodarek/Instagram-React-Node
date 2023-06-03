@@ -10,8 +10,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 export const MainSidePanel = () => {
   //prettier-ignore
-  const themes= ["light", "dark", "cupcake", "emerald", "retro",  "garden", "forest","pastel","dracula", "autumn", "lemonade"]
+  const themes= ["light", "dark", "cupcake", "emerald", "retro",  "garden", "cyberpunk","pastel","dracula", "autumn", "lemonade"]
   const token = useSelector((state: RootState) => state.app.token);
+  const imie = useSelector((state: RootState) => state.app.name);
+  const userName = useSelector((state: RootState) => state.app.userName);
+  const nav = useNavigate();
 
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || "cupcake"
@@ -22,7 +25,6 @@ export const MainSidePanel = () => {
     localStorage.setItem("theme", el);
   };
 
-  const nav = useNavigate();
   useEffect(() => {
     document.querySelector("html")!.setAttribute("data-theme", theme);
   }, [theme]);
@@ -47,51 +49,67 @@ export const MainSidePanel = () => {
   };
   return (
     <div className="w-full h-full flex flex-col items-center pt-10">
-      <button
-        className="btn btn-square btn-outline btn-secondary mb-5"
-        onClick={() => nav("/main")}
-      >
-        <House size={32} className="h-8 w-8" />
-      </button>
-
-      <button
-        className="btn btn-square btn-outline btn-secondary mb-5 "
-        onClick={() => nav("/addPhoto")}
-      >
-        <PlusCircle size={32} className="h-8 w-8" />
-      </button>
-
-      <div className="dropdown dropdown-right">
-        <label
-          tabIndex={0}
-          className="btn btn-square btn-outline btn-secondary mb-5"
-        >
-          <Palette size={32} className="h-8 w-8" />
-        </label>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 ml-2"
-        >
-          {themes.map((el) => (
-            <li key={el}>
-              <a onClick={() => toggleTheme(el)}>{el}</a>
-            </li>
-          ))}
-        </ul>
+      <div className="flex flex-col items-center mb-4">
+        <h1 className="text-4xl font-bold ">Instagram</h1>
       </div>
-
-      <button
-        className="btn btn-square btn-outline btn-secondary mb-5"
-        onClick={() => nav("/settings")}
-      >
-        <Gear size={32} className="h-8 w-8" />
-      </button>
-      <button
-        className="btn btn-square btn-outline btn-secondary mb-5"
-        onClick={logout}
-      >
-        <Power size={32} className="h-8 w-8" />
-      </button>
+      <div className="grid grid-cols-2	gap-4">
+        <button
+          className="btn btn-ghost btn-circle avatar "
+          onClick={() => nav("/profile/" + userName)}
+        >
+          <div className="rounded-full">
+            <img src={`http://localhost:4000/api/profile/photo/${userName}`} />
+          </div>
+        </button>
+        <button
+          className="btn btn-square btn-outline btn-secondary mb-5"
+          onClick={() => nav("/main")}
+        >
+          <House size={32} className="h-8 w-8" />
+        </button>
+        <button
+          className="btn btn-square btn-outline btn-secondary mb-5 "
+          onClick={() => nav("/addPhoto")}
+        >
+          <PlusCircle size={32} className="h-8 w-8" />
+        </button>
+        <div className="dropdown dropdown-right">
+          <label
+            tabIndex={0}
+            className="btn btn-square btn-outline btn-secondary mb-5"
+          >
+            <Palette size={32} className="h-8 w-8" />
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 ml-2"
+          >
+            {themes.map((el) => (
+              <li key={el} className="flex">
+                <a onClick={() => toggleTheme(el)}>
+                  <div
+                    data-theme={el}
+                    className=" w-4 h-4 rounded-full bg-primary"
+                  ></div>
+                  {el}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <button
+          className="btn btn-square btn-outline btn-secondary mb-5"
+          onClick={() => nav("/settings")}
+        >
+          <Gear size={32} className="h-8 w-8" />
+        </button>
+        <button
+          className="btn btn-square btn-outline btn-secondary mb-5"
+          onClick={logout}
+        >
+          <Power size={32} className="h-8 w-8" />
+        </button>
+      </div>
     </div>
   );
 };

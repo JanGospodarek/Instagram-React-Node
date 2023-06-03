@@ -36,9 +36,12 @@ export const MainPost = (props: {
           className="rounded-lg"
         />{" "}
       </div>
-      <div className="flex flex-row mt-5 ml-16">
+      <div className="flex flex-row mt-5 ml-16 flex-wrap">
         {tags.map((tag: any) => (
-          <div key={tag} className="badge ml-2 badge-outline badge-primary">
+          <div
+            key={tag}
+            className="badge ml-2 badge-outline badge-primary mb-1"
+          >
             {tag.name}
           </div>
         ))}

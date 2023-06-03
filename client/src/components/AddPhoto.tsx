@@ -4,7 +4,7 @@ import { RootState } from "../store/store";
 import { useInitUserData } from "../hooks/useInitUserData";
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { MainSidePanel } from "./Main/MainSidePanel";
-import { Check } from "phosphor-react";
+import { Check, Trash } from "phosphor-react";
 import Fetch from "../hooks/Fetch";
 import { Plus } from "phosphor-react";
 import Alert from "./Alert";
@@ -12,11 +12,15 @@ export const AddPhoto = () => {
   const imie = useSelector((state: RootState) => state.app.userName);
   const token = useSelector((state: RootState) => state.app.token);
   const [photoId, setPhotoId] = useState<number | null>(null);
+  const [inputError, setInputError] = useState<boolean>(false);
   const [tagVal, setTagVal] = useState<string>("");
   const [filter, setFilter] = useState<string>("none");
   const [color, setColor] = useState<string>("");
   const [amount, setAmount] = useState<number>(100);
   const [tags, setTags] = useState<string[]>([]);
+  const [popularTags, setPopularTags] = useState<
+    { name: string; popularity: string }[]
+  >([]);
   const [responses, setResponses] = useState<any>([null, null]);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const [isAlert, setIsAlert] = useState<{
@@ -50,14 +54,24 @@ export const AddPhoto = () => {
     const data = await res.json();
 
     setPhotoId(data.id);
+
+    const res2 = (await Fetch(
+      "http://localhost:4000/api/tags",
+      undefined,
+      "GET",
+      {}
+    )) as Response;
+    const data2 = await res2.json();
+    data2.sort((a: any, b: any) => b.popularity - a.popularity);
+    setPopularTags(data2.slice(0, 20));
   };
-  const handleColorChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const color = e.target.value;
-    const r = parseInt(color.substr(1, 2), 16);
-    const g = parseInt(color.substr(3, 2), 16);
-    const b = parseInt(color.substr(5, 2), 16);
-    setColor(`rgb(${r},${g},${b})`);
-  };
+  // const handleColorChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  //   const color = e.target.value;
+  //   const r = parseInt(color.substr(1, 2), 16);
+  //   const g = parseInt(color.substr(3, 2), 16);
+  //   const b = parseInt(color.substr(5, 2), 16);
+  //   setColor(`rgb(${r},${g},${b})`);
+  // };
 
   const handlePhotoUpload = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the form from submitting immediately
@@ -175,10 +189,10 @@ export const AddPhoto = () => {
   }, [responses]);
   return (
     <>
-      <MainNavbar name={imie} />
-      <main className="w-full h-screen grid grid-cols-[100px_1fr]">
+      {/* <MainNavbar name={imie} /> */}
+      <main className="w-full h-screen grid grid-cols-[200px_1fr]">
         <MainSidePanel />
-        <div className=" grid grid-cols-2">
+        <div className=" grid grid-cols-2 ">
           <div className="m-10 flex flex-col">
             <div>
               <form
@@ -206,21 +220,50 @@ export const AddPhoto = () => {
             {photoId && (
               <>
                 <div className="divider mt-5">Edycja dodanego posta</div>
-
+                <p>Najpopularniejsze tagi</p>
+                <div className="flex flex-row flex-wrap rounded-lg bg-base-200 mb-4">
+                  {popularTags.map((tag) => (
+                    <button
+                      className="btn btn-xs m-1 btn-primary"
+                      onClick={() => {
+                        if (!tags.includes(tag.name)) {
+                          setTags((state) => [...state, tag.name]);
+                        } else {
+                          setIsAlert({
+                            type: "ERROR",
+                            msg: `Tag ${tag.name} został juz dodany do zdjęcia`,
+                          });
+                        }
+                      }}
+                    >
+                      {tag.name}
+                    </button>
+                  ))}
+                </div>
                 <div className="flex flex-row items-end">
                   <div className="form-control w-full max-w-xs ">
                     <input
                       type="text"
-                      className="input input-bordered w-full "
-                      placeholder="Dodaj tag do listy"
+                      className={`input input-bordered w-full input-sm  ${
+                        inputError && "input-error"
+                      }`}
+                      placeholder="Dodaj nowy tag do listy "
                       value={tagVal as string}
-                      onChange={(e) => setTagVal(e.target.value)}
+                      onChange={(e) => {
+                        if (e.target.value.split("")[0] !== "#")
+                          setInputError(true);
+                        else setInputError(false);
+                        setTagVal(e.target.value.replace(" ", "_"));
+                      }}
                     />
                   </div>
 
                   <button
-                    className="btn btn-square btn-outline btn-success ml-5"
+                    className={`btn btn-square btn-outline ml-5 btn-sm ${
+                      inputError ? "btn-error" : "btn-success "
+                    }`}
                     onClick={() => {
+                      if (inputError) return;
                       if (!tags.includes(tagVal)) {
                         setTags((state) => [...state, tagVal]);
                         setTagVal("");
@@ -238,8 +281,24 @@ export const AddPhoto = () => {
                 <div className="flex flex-row flex-wrap items-center mt-8">
                   Tagi:
                   {tags.map((tag) => (
-                    <div key={tag} className="badge ml-2 badge-outline">
-                      {tag}
+                    <div className="indicator ml-4 ">
+                      <button
+                        className="indicator-item badge badge-error p-1"
+                        onClick={() => {
+                          const index = tags.findIndex((el) => el == tag);
+                          setTags((state: string[]) => {
+                            const copy = [...state];
+                            copy.splice(index, 1);
+                            return copy;
+                          });
+                        }}
+                      >
+                        <Trash />
+                      </button>
+
+                      <div key={tag} className="badge badge-outline">
+                        {tag}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -291,18 +350,18 @@ export const AddPhoto = () => {
                   className="btn btn-sm btn-outline btn-success mt-5 w-36 mx-auto"
                   onClick={handleSubmit}
                 >
-                  Dodaj
+                  Zapisz
                 </button>
               </>
             )}
           </div>
-          <div className="mt-10  w-[400px] h-[400px]">
+          <div className="mt-10  w-[400px] h-[400px] mx-auto">
             {photoId !== null && (
               <img
                 ref={imageRef}
                 src={`http://localhost:4000/api/photos/file/${photoId}`}
                 style={{ width: "400px" }}
-                className="rounded-lg"
+                className="rounded-lg "
               />
             )}
           </div>

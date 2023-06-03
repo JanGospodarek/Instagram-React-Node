@@ -78,8 +78,8 @@ export const Profile = () => {
   //handle if users exists or not etc
   return (
     <>
-      <MainNavbar name={myUserName} />
-      <main className="w-full h-screen grid grid-cols-[100px_1fr]">
+      {/* <MainNavbar name={myUserName} /> */}
+      <main className="w-full h-screen grid grid-cols-[200px_1fr]">
         <MainSidePanel />
         {isAlert !== null ? (
           <Alert
@@ -90,7 +90,7 @@ export const Profile = () => {
           />
         ) : (
           <div className="w-full   flex flex-col overflow-y-scroll ">
-            <div className="flex flex-row items-center p-20 border-b-2 border-base-200">
+            <div className="flex flex-row items-center p-20 border-b-2 border-base-200 mr-8">
               <div className="avatar">
                 <div className="w-36 rounded-full">
                   <img
