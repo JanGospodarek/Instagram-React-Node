@@ -21,7 +21,7 @@ export const MainPost = (props: {
   }
 
   return (
-    <div className="w-[600px] flex flex-col rounded-lg shadow-lg mt-8 pb-5 ">
+    <div className="w-[600px] flex flex-col rounded-lg shadow-xl mt-8 pb-5 ">
       <div className="grid grid-cols-2 p-10 ">
         <div className="flex flex-row items-center ">
           <button

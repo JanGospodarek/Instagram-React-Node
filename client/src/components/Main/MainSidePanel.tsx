@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 export const MainSidePanel = () => {
   //prettier-ignore
-  const themes= ["light", "dark", "cupcake", "emerald", "retro",  "garden", "cyberpunk","pastel","dracula", "autumn", "lemonade"]
+  const themes= ["light", "dark", "cupcake", "emerald", "night",  "winter", "cyberpunk","bumblebee","dracula", "autumn", "pastel"]
   const token = useSelector((state: RootState) => state.app.token);
   const imie = useSelector((state: RootState) => state.app.name);
   const userName = useSelector((state: RootState) => state.app.userName);

@@ -33,7 +33,10 @@ const Register = () => {
       nameRef.current!.classList.add("input-error");
       errorWasFound = true;
     }
-
+    if (userNameRef.current!.value.trim() === "") {
+      userNameRef.current!.classList.add("input-error");
+      errorWasFound = true;
+    }
     if (lastNameRef.current!.value.trim() === "") {
       lastNameRef.current!.classList.add("input-error");
       errorWasFound = true;
@@ -101,7 +104,7 @@ const Register = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Your name"
+                  placeholder="Imie"
                   maxLength={15}
                   ref={nameRef}
                   className="input input-bordered focus:input-secondary"
@@ -116,7 +119,7 @@ const Register = () => {
                   type="text"
                   maxLength={20}
                   ref={lastNameRef}
-                  placeholder="Your last name"
+                  placeholder="Nazwisko"
                   className="input input-bordered focus:input-secondary"
                   onChange={(e) => e.target.classList.remove("input-error")}
                 />
@@ -129,7 +132,7 @@ const Register = () => {
                   type="text"
                   maxLength={20}
                   ref={userNameRef}
-                  placeholder="Your last name"
+                  placeholder="Nazwa uzytkownika"
                   className="input input-bordered focus:input-secondary"
                   onChange={(e) => e.target.classList.remove("input-error")}
                 />
@@ -143,7 +146,7 @@ const Register = () => {
                   value={email}
                   ref={emailRef}
                   maxLength={25}
-                  placeholder="Must include '@'"
+                  placeholder="Email- musi zawierać '@'"
                   className={`input input-bordered  ${compileValidityClasses(
                     "email",
                     undefined,
@@ -158,7 +161,7 @@ const Register = () => {
                 </label>
                 <input
                   type="password"
-                  placeholder="At least 8 characters"
+                  placeholder="Co najmniej 8 znaków"
                   maxLength={25}
                   value={password}
                   ref={passwordRef}

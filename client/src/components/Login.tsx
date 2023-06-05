@@ -82,7 +82,7 @@ const Login = () => {
         <div className="hero-content flex-col ">
           <div className="text-center lg:text-left">
             <h1 className="text-6xl font-bold w-full text-center mb-12">
-              Log in
+              Zaloguj się
             </h1>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -95,7 +95,7 @@ const Login = () => {
                   type="text"
                   value={email}
                   ref={emailRef}
-                  placeholder="Must include '@'"
+                  placeholder="Musi zawierać '@'"
                   className={`input input-bordered  ${compileValidityClasses(
                     "email",
                     undefined,
@@ -110,7 +110,7 @@ const Login = () => {
                 </label>
                 <input
                   type="password"
-                  placeholder="At least 8 characters"
+                  placeholder=""
                   value={password}
                   ref={passwordRef}
                   className={`input input-bordered  ${compileValidityClasses(
