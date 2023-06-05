@@ -18,6 +18,18 @@ export const ProfilePhotoCard = (props: {
     msg: string;
   } | null>(null);
 
+  function formatDate(date: Date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
+
   const deletePhoto = async () => {
     if (props.userName !== myUserName) return;
     const res = (await Fetch(
@@ -53,16 +65,16 @@ export const ProfilePhotoCard = (props: {
             </div>
 
             <div className="flex justify-end items-center">
-              {props.date.toDateString()}
+              {formatDate(props.date)}
             </div>
           </div>
           <div className="w-[400px] h-[400px]  mx-auto">
             <img
               className="rounded-lg"
               src={`http://localhost:4000/api/photos/file/${props.id}`}
-            />{" "}
+            />
           </div>
-          <div className="flex flex-row mt-5 mx-16 flex-wrap">
+          <div className="flex flex-row mt-5 mx-5 flex-wrap">
             {props.tags.map((tag: any) => (
               <div
                 key={tag.name}

@@ -142,6 +142,7 @@ const Register = () => {
                   type="text"
                   value={email}
                   ref={emailRef}
+                  maxLength={25}
                   placeholder="Must include '@'"
                   className={`input input-bordered  ${compileValidityClasses(
                     "email",
@@ -158,6 +159,7 @@ const Register = () => {
                 <input
                   type="password"
                   placeholder="At least 8 characters"
+                  maxLength={25}
                   value={password}
                   ref={passwordRef}
                   className={`input input-bordered  ${compileValidityClasses(

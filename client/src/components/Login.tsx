@@ -109,7 +109,7 @@ const Login = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   placeholder="At least 8 characters"
                   value={password}
                   ref={passwordRef}

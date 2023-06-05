@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ProfilePhotoCard } from "./ProfilePhotoCard";
 import MainNavbar from "./Main/MainNavbar";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,12 +23,16 @@ export const Profile = () => {
   } | null>(null);
   const [userName, setUserName] = useState("");
   const [userPhotos, setUserPhotos] = useState<any[]>([]);
+  const location = useLocation();
+
   const handleCloseAlert = () => {
     setIsAlert(null);
   };
+
   useEffect(() => {
     init();
   }, []);
+
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
@@ -74,7 +78,7 @@ export const Profile = () => {
       }
     };
     fetchUserData();
-  }, []);
+  }, [location]);
   //handle if users exists or not etc
   return (
     <>
@@ -118,6 +122,9 @@ export const Profile = () => {
                   />
                 </>
               ))}
+              {userPhotos.length == 0 && (
+                <p className="text-3xl text-accent">Strasznie tu cicho 🤔</p>
+              )}
             </div>
           </div>
         )}

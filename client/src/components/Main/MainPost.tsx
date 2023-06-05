@@ -8,6 +8,18 @@ export const MainPost = (props: {
 }) => {
   const { userName, tags, date } = props;
   const nav = useNavigate();
+  function formatDate(date: Date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
+
   return (
     <div className="w-[600px] flex flex-col rounded-lg shadow-lg mt-8 pb-5 ">
       <div className="grid grid-cols-2 p-10 ">
@@ -25,9 +37,7 @@ export const MainPost = (props: {
           <p className=" text-lg ml-4">{userName}</p>
         </div>
 
-        <div className="flex justify-end items-center">
-          {date.toDateString()}
-        </div>
+        <div className="flex justify-end items-center">{formatDate(date)}</div>
       </div>
       <div className=" mx-auto">
         <img

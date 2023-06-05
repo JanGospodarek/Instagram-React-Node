@@ -119,6 +119,7 @@ export const Settings = () => {
                   className="input input-bordered w-full max-w-xs"
                   value={nameVal as string}
                   onChange={(e) => setName(e.target.value)}
+                  maxLength={25}
                 />
               </div>
               <button
@@ -138,6 +139,7 @@ export const Settings = () => {
                   className="input input-bordered w-full max-w-xs"
                   value={lastNameVal as string}
                   onChange={(e) => setLastName(e.target.value)}
+                  maxLength={25}
                 />
               </div>
               <button
